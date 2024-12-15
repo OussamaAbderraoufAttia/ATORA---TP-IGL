@@ -14,7 +14,7 @@ This Django project includes:
 
 Clone the project repository to your local machine:
 
-git clone https://github.com/yourusername/your-repository.git
+git clone https://github.com/OussamaAbderraoufAttia/ATORA---TP-IGL/
 
 Navigate into the project folder:
 

@@ -1,0 +1,33 @@
+<div class="w-full max-w-4xl mx-auto shadow-lg">
+    <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-4">
+      <div class="flex items-center space-x-4">
+        <div class="w-20 h-20 border-4 border-white rounded-full flex items-center justify-center bg-blue-500 text-3xl font-bold">
+          {{ patient.firstName[0] }}{{ patient.lastName[0] }}
+        </div>
+        <div>
+          <h2 class="text-3xl">{{ patient.firstName }} {{ patient.lastName }}</h2>
+          <p class="text-blue-100">Numéro Sécurité Sociale: {{ patient.securityNumber }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="p-6">
+      <div class="flex space-x-4 mb-4">
+        <button (click)="setActiveTab('personal')" [class.active]="activeTab === 'personal'">Informations Personnelles</button>
+        <button (click)="setActiveTab('medical')" [class.active]="activeTab === 'medical'">Informations Médicales</button>
+        <button (click)="setActiveTab('emergency')" [class.active]="activeTab === 'emergency'">Contact d'Urgence</button>
+      </div>
+      <div *ngIf="activeTab === 'personal'" class="space-y-4">
+        <app-info-item icon="📅" label="Date de Naissance" [value]="patient.dateOfBirth"></app-info-item>
+        <app-info-item icon="🏠" label="Adresse" [value]="patient.address"></app-info-item>
+        <app-info-item icon="📞" label="Téléphone" [value]="patient.phone"></app-info-item>
+      </div>
+      <div *ngIf="activeTab === 'medical'" class="space-y-4">
+        <app-info-item icon="💊" label="Mutuelle" [value]="patient.insurance"></app-info-item>
+        <app-info-item icon="👨‍⚕️" label="Médecin Traitant" [value]="patient.doctor"></app-info-item>
+      </div>
+      <div *ngIf="activeTab === 'emergency'" class="space-y-4">
+        <app-info-item icon="👥" label="Personne de Contact" [value]="patient.emergencyContact"></app-info-item>
+        <app-info-item icon="📞" label="Téléphone de Contact" [value]="patient.emergencyPhone"></app-info-item>
+      </div>
+    </div>
+  </div>

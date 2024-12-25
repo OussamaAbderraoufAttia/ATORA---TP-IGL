@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Component, Input } from '@angular/core';
 import { InfoItemComponent } from '../info-item/info-item.component'; // Adjust the path as necessary
 
@@ -29,3 +30,23 @@ export class PatientComponent {
     this.activeTab = tab;
   }
 }
+=======
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+
+@Component({
+  selector: 'app-patient',
+  imports: [],
+  templateUrl: './patient.component.html',
+  styleUrl: './patient.component.css'
+})
+export class PatientComponent {
+  activeTab: string = 'personal'; // Default state
+
+  setActiveTab(tab: string): void {
+    this.activeTab = tab;
+  }
+
+}
+>>>>>>> 051e9f9962861fe12f69190558fbb6952edf26b6

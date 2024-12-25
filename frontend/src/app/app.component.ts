@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+<<<<<<< HEAD
 import { LoginComponent } from "./login/login.component";
 import { PatientComponent } from "./patient/patient.component";
 
@@ -7,6 +8,13 @@ import { PatientComponent } from "./patient/patient.component";
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, LoginComponent, PatientComponent],
+=======
+
+
+@Component({
+  selector: 'app-root',
+  imports: [RouterOutlet],
+>>>>>>> 051e9f9962861fe12f69190558fbb6952edf26b6
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'] // Corrected from styleUrl to styleUrls
 })

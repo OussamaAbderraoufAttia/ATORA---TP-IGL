@@ -1,0 +1,96 @@
+<div class="container mx-auto max-w-lg mt-10 shadow-lg rounded-lg overflow-hidden">
+    <!-- Header -->
+    <div class="bg-blue-500 text-white p-4 flex items-center">
+      <div class="rounded-full bg-blue-700 w-12 h-12 flex items-center justify-center font-bold">
+        MD
+      </div>
+      <div class="ml-4">
+        <h2 class="text-lg font-bold">Madelynn Doe</h2>
+        <p class="text-sm">Numéro Sécurité Sociale: 794-555-4265-XS215</p>
+      </div>
+    </div>
+  
+    <!-- Tab Buttons -->
+    <div class="bg-gray-100 flex justify-around p-4">
+        <div class="bg-gray-200 flex p-2 rounded-lg">
+      <button
+        class="px-4 py-2 text-sm font-semibold rounded-md transition-all ml-2 mr-2"
+        [class.bg-white]="activeTab === 'personal'"
+        [class.text-black]="activeTab === 'personal'"
+        [class.text-gray-700]="activeTab !== 'personal'"
+        [class.bg-gray-200]="activeTab !== 'personal'"
+        (click)="setActiveTab('personal')"
+      >
+        Informations Personnelles
+      </button>
+      <button
+        class="px-4 py-2 text-sm font-semibold rounded-md transition-all ml-2 mr-2"
+        [class.bg-white]="activeTab === 'medical'"
+        [class.text-black]="activeTab === 'medical'"
+        [class.text-gray-700]="activeTab !== 'medical'"
+        [class.bg-gray-200]="activeTab !== 'medical'"
+        (click)="setActiveTab('medical')"
+      >
+        Informations Médicales
+      </button>
+      <button
+        class="px-4 py-2 text-sm font-semibold rounded-md transition-all ml-2 mr-2"
+        [class.bg-white]="activeTab === 'contact'"
+        [class.text-black]="activeTab === 'contact'"
+        [class.text-gray-700]="activeTab !== 'contact'"
+        [class.bg-gray-200]="activeTab !== 'contact'"
+        (click)="setActiveTab('contact')"
+      >
+        Contact d'Urgence
+      </button>
+    </div>
+    </div>
+  
+    <!-- Content -->
+    <div class="bg-white p-6">
+      <div [style.display]="activeTab === 'personal' ? 'block' : 'none'">
+        <div class="bg-slate-300 flex items-center rounded-md p-2 mb-4">
+            <img class="w-10 h-10 mr-4" src="https://i.ibb.co/GTrZnpK/date.png" alt="date" >
+            <div><p class="text-sm mb-1 font-bold">Date de Naissance</p>
+            <p class="text-sm"> 15/05/1985</p></div>
+        </div>
+        <div class="bg-slate-300 flex items-center rounded-md p-2 mb-4">
+            <img class="w-10 h-10 mr-4" src="https://i.ibb.co/7vKtRMD/maison.png" alt="adresse" >
+            <div><p class="text-sm mb-1 font-bold">adresse</p>
+            <p class="text-sm"> 4703 Davis Trace</p></div>
+        </div>
+        <div class="bg-slate-300 flex items-center rounded-md p-2 mb-4">
+            <img class="w-10 h-10 mr-4" src="https://i.ibb.co/n61hrMv/appel.png" alt="phone" >
+            <div><p class="text-sm mb-1 font-bold">Téléphone</p>
+            <p class="text-sm">212-456-8908</p></div>
+        </div>
+      </div>
+      <!--<img src="https://i.ibb.co/N3Gg0Vy/ajouter-un-utilisateur.png" alt="ajouter-un-utilisateur" border="0"><img src="https://i.ibb.co/Ws2jBrv/client.png" alt="client" border="0"><img src="https://i.ibb.co/7WC5DbM/coeur.png" alt="coeur" border="0">-->
+      <div [style.display]="activeTab === 'medical' ? 'block' : 'none'">
+        <div class="bg-slate-300 flex items-center rounded-md p-2 mb-4">
+            <img class="w-10 h-10 mr-4" src="https://i.ibb.co/7WC5DbM/coeur.png" alt="coeur" >
+            <div><p class="text-sm mb-1 font-bold">Mutuelle</p>
+            <p class="text-sm"> Mutuelle X</p></div>
+        </div>
+        <div class="bg-slate-300 flex items-center rounded-md p-2 mb-4">
+            <img class="w-10 h-10 mr-4" src="https://i.ibb.co/Ws2jBrv/client.png" alt="medecin" >
+            <div><p class="text-sm mb-1 font-bold">Médecin Traitant</p>
+            <p class="text-sm"> Dr. Katherine Fell</p></div>
+        </div>
+      </div>
+  
+      <div [style.display]="activeTab === 'contact' ? 'block' : 'none'">
+        <div class="bg-slate-300 flex items-center rounded-md p-2 mb-4">
+            <img class="w-10 h-10 mr-4" src="https://i.ibb.co/N3Gg0Vy/ajouter-un-utilisateur.png" alt="personne de contact" >
+            <div><p class="text-sm mb-1 font-bold">Personne de Contact</p>
+            <p class="text-sm"> Terry Schimmel</p></div>
+        </div>
+        <div class="bg-slate-300 flex items-center rounded-md p-2 mb-4">
+            <img class="w-10 h-10 mr-4" src="https://i.ibb.co/n61hrMv/appel.png" alt="tel" >
+            <div><p class="text-sm mb-1 font-bold">Téléphone du Contact</p>
+            <p class="text-sm">212-678-2134 </p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

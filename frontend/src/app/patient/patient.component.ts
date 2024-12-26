@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
 
 @Component({
   selector: 'app-patient',
@@ -9,10 +7,21 @@ import { CommonModule } from '@angular/common';
   styleUrl: './patient.component.css'
 })
 export class PatientComponent {
-  activeTab: string = 'personal'; // Default state
+  activeTab: string = 'personal';
+  userRole:string = "admin" // Default state
 
   setActiveTab(tab: string): void {
     this.activeTab = tab;
   }
+
+  setRole(role:string):void{
+    this.userRole = role;
+  }
+
+  getRole():string{
+    return this.userRole;
+  }
+
+  
 
 }

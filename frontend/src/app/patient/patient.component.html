@@ -1,7 +1,8 @@
-<div class="mb-8 w-32 top-0 left-0 ml-2 mt-2">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+   <div class="mb-8 w-32 top-0 left-0 ml-2 mt-2">
     <img src="https://i.ibb.co/t44RYBf/logo-Atora.png" alt="Logo" >
- </div>
-<div class="container mx-auto max-w-lg mt-10 shadow-lg rounded-lg overflow-hidden">
+    </div>
+    <div class="container mx-auto max-w-lg  mt-10 shadow-lg rounded-lg overflow-hidden">
     <!-- Header -->
     <div class="bg-blue-500 text-white p-4 flex items-center">
       <div class="rounded-full bg-blue-700 w-12 h-12 flex items-center justify-center font-bold">
@@ -96,4 +97,43 @@
       </div>
     </div>
   </div>
-  
+<div
+  class="flex items-center justify-center m-16 p-4"
+  [style.display]="getRole() === 'patient' ? 'none' : 'block'"
+>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+    <!-- Button 1 -->
+    <button class="bg-white  shadow-xl rounded-lg p-4 flex flex-col items-center">
+        <i class="fas fa-stethoscope text-2xl text-blue-500"></i>
+        <p class="text-gray-700 font-bold mt-2">Consultations</p>
+        <p class="text-blue-500 font-bold text-2xl">3</p>
+    </button>
+    
+    <!-- Button 2 -->
+    <button class="bg-white  shadow-xl rounded-lg p-4 flex flex-col items-center">
+        <i class="fas fa-vial text-2xl text-blue-500"></i>
+        <p class="text-gray-700 font-bold mt-2">Bilans Biologique</p>
+        <p class="text-blue-500 font-bold text-2xl">2</p>
+    </button>
+    <!-- Button 3 -->
+    <button class="bg-white  shadow-xl rounded-lg p-4 flex flex-col items-center">
+        <i class="fas fa-medkit text-blue-500 text-2xl mb-2"></i>
+        <p class="text-gray-700 font-bold mt-2">Soins</p>
+        <p class="text-blue-500 font-bold text-2xl">1</p>
+    </button>
+    <!-- Button 4 -->
+    <button class="bg-white  shadow-xl rounded-lg p-4 flex flex-col items-center">
+        <i class="fas fa-file-medical text-blue-500 text-2xl mb-2"></i>
+        <p class="text-gray-700 font-bold mt-2">Dignostiques</p>
+        <p class="text-blue-500 font-bold text-2xl">4</p>
+    </button>
+    <!-- Button 5 -->
+    <button class="bg-white  shadow-xl rounded-lg p-4 flex flex-col items-center">
+        <i class="fas fa-x-ray text-blue-500 text-2xl mb-2"></i>
+        <p class="text-gray-700 font-bold mt-2">Bilans Radio</p>
+        <p class="text-blue-500 font-bold text-2xl">5</p>
+    </button>
+</div>
+
+</div>
+

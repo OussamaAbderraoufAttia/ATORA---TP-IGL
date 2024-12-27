@@ -26,6 +26,7 @@ export class PatientComponent {
   getRole():string{
     return this.userRole;
   }
+  
   handleCardClick(category: string) {
     this.modalTitle = category;
     this.modalHeaders = this.getTableHeaders(category);

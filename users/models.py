@@ -24,7 +24,7 @@ class UtilisateurManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
-class Utilisateur(AbstractBaseUser):
+class Utilisateur(AbstractBaseUser,PermissionsMixin):
     nom = models.CharField(max_length=50)
     prenom = models.CharField(max_length=50)
     username = models.CharField(max_length=50, unique=True,null=True, blank=True)

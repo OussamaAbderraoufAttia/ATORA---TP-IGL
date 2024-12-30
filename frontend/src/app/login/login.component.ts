@@ -26,7 +26,11 @@ export class LoginComponent {
     console.log(username);
     const response = await this.loginService.login(username, password);
     console.log('Login successful', response);
-    this.router.navigate(['/patient']);
+    if (response.user_data.user_type == 'admin') {
+      this.router.navigate(['/admin/profile'], { state: { user: response.user_data } });
+    } else if (response.user_data.user_type == 'patient') {
+    this.router.navigate(['/patient'], { state: { user: response.user_data } });
+    }
     
     
   }

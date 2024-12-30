@@ -7,6 +7,7 @@ class PatientInline(admin.TabularInline):
     extra = 1  # To allow adding multiple patients
 
 # Register the Utilisateur model with a custom admin
+
 @admin.register(Utilisateur)
 class UtilisateurAdmin(admin.ModelAdmin):
     list_display = ('nom', 'prenom', 'email', 'user_type', 'is_active', 'is_staff', 'date_creation')

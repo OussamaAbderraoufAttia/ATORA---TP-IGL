@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-patient',
@@ -7,16 +8,24 @@ import { CommonModule } from '@angular/common';
   templateUrl: './patient.component.html',
   styleUrl: './patient.component.css'
 })
-export class PatientComponent {
+export class PatientComponent implements OnInit {
   activeTab: string = 'personal';
-  userRole:string = "admin" // Default state
+  userRole:string = "" // Default state
   isModalOpen = false;
   modalTitle = '';
   modalHeaders: string[] = [];
   modalRows: string[][] = [];
+  user: any = {};
 
   setActiveTab(tab: string): void {
     this.activeTab = tab;
+  }
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    // Retrieve the user data from the router state
+    this.user = history.state.user;
+    this.userRole = this.user.user_type;
   }
 
   setRole(role:string):void{

@@ -32,15 +32,28 @@ def login_view(request):
         # Authenticate the user
         user = authenticate(request, username=username, password=password)
         print(user)
-        if user is not None and user.is_active:
-            # Log the user in if authentication is successful
-            login(request, user)
-            print("login successful")
-            return JsonResponse({"message": "Login successful"}, status=200)
+        if user is not None:
+            return JsonResponse({
+                "message": "Login successful!",
+                "user_data" : {
+                "nom": user.nom,
+                "prenom": user.prenom,
+                "email": user.email,
+                "username": user.username,
+                "date_creation": user.date_creation,
+                "derniere_connexion": user.derniere_connexion,
+                "telephone": user.telephone,
+                "user_type": user.user_type,
+                "is_active": user.is_active,
+                "is_staff": user.is_staff,
+            }
+            }, status=200)
         else:
-            return JsonResponse({"error": "Invalid credentials or account is inactive"}, status=401)
-
-    return JsonResponse({"error": "Only POST method is allowed"}, status=405)
+            return JsonResponse({
+                "message": "Invalid credentials. Please try again."
+            }, status=401)
+    else:
+        return JsonResponse({"error": "Only POST method is allowed"}, status=405)
 
 
 

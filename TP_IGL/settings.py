@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -51,7 +52,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    
 ]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200",  # Angular development server
+    # Add other origins as needed
+]
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'TP_IGL.urls'
 
@@ -83,8 +91,8 @@ DATABASES = {
         'NAME': 'ATORA',
         'USER': 'root',
         'PASSWORD': '1234ATORA',
-        'HOST': 'localhost',  # Use the IP address or hostname of your MySQL server
-        'PORT': '3306',       # Default MySQL port
+        'HOST': '127.0.0.1',  # Use the IP address or hostname of your MySQL server
+        'PORT': '3307',       # Default MySQL port
     }
 }
 

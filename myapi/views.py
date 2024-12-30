@@ -6,7 +6,7 @@ from django.core.mail import send_mail
 from django.utils.crypto import get_random_string
 from django.contrib.auth.hashers import make_password
 from django.conf import settings
-from .models import Utilisateur
+from users.models import Utilisateur
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
@@ -18,8 +18,12 @@ from django.core.exceptions import ValidationError
 @csrf_exempt  # Exempting CSRF check for simplicity (remove this in production)
 def login_view(request):
     if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
+        data = json.loads(request.body)
+        print(data)
+        username = data.get('username')
+        password = data.get('password')
+        print(username)
+        print(password)
 
         # Check if username and password are provided
         if not username or not password:
@@ -27,10 +31,11 @@ def login_view(request):
 
         # Authenticate the user
         user = authenticate(request, username=username, password=password)
-
+        print(user)
         if user is not None and user.is_active:
             # Log the user in if authentication is successful
             login(request, user)
+            print("login successful")
             return JsonResponse({"message": "Login successful"}, status=200)
         else:
             return JsonResponse({"error": "Invalid credentials or account is inactive"}, status=401)

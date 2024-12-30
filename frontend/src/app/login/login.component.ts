@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginService } from '../login.service';
+import { delay } from 'rxjs';
+
 
 
 
@@ -11,24 +14,20 @@ import { Router } from '@angular/router';
   imports: []
 })
 export class LoginComponent {
-  loginForm: FormGroup;
+  
 
-  constructor(private fb: FormBuilder, private router: Router) {
-    this.loginForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
-    });
+  constructor(private router: Router, private loginService: LoginService) {
+   
   }
 
-  onSubmit() {
-    if (this.loginForm.valid) {
-      const { username, password } = this.loginForm.value;
-      // Implement your authentication logic here
-      console.log('Username:', username);
-
-      console.log('Password:', password);
-      // Navigate to the dashboard on successful login
-      this.router.navigate(['/dashboard']);
-    }
+  async onSubmit() {
+   const username = (document.getElementById('username') as HTMLInputElement)?.value;
+    const password = (document.getElementById('password')as HTMLInputElement)?.value;
+    console.log(username);
+    const response = await this.loginService.login(username, password);
+    console.log('Login successful', response);
+    this.router.navigate(['/patient']);
+    
+    
   }
 }

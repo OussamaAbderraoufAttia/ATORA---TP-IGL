@@ -16,11 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from myapi.views import login_view, ForgotPasswordView
+from myapi.views import login_view, ForgotPasswordView, DPIListView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/login/', login_view),
+    path('api/dpi/', DPIListView.as_view(), name='dpi-list'), 
     
  
    

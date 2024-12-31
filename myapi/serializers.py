@@ -8,6 +8,16 @@ from users.models import (
     Laboratoire,
     Hospital
 )
+from medical_record.models import Diagnostic, Compte_Rendu, CertificatMedical, Hospital, Soin, DPI
+from medical_record.models import DPI
+
+
+class DPISerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DPI
+        fields = ['id_dpi', 'patient', 'date_creation', 'commentaire_administratif', 'chemin_QR_code', 
+                  'diagnostic', 'compte_Rendu', 'certificatMedical', 'hospitalisation', 'soin']
+
 
 
 class UtilisateurSerializer(serializers.ModelSerializer):
@@ -19,6 +29,7 @@ class UtilisateurSerializer(serializers.ModelSerializer):
             'user_type', 'is_active', 'is_staff'
         ]
         read_only_fields = ['date_creation', 'derniere_connexion']
+
 
 
 class MedecinSerializer(serializers.ModelSerializer):

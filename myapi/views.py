@@ -13,6 +13,14 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.core.exceptions import ValidationError
+from medical_record.models import DPI
+from .serializers import DPISerializer
+
+class DPIListView(APIView):
+    def get(self, request):
+        dpi_list = DPI.objects.all()  # Fetch all DPI records from the database
+        serializer = DPISerializer(dpi_list, many=True)  # Serialize the records
+        return Response(serializer.data)  # Return the serialized data as JSON
 
 
 @csrf_exempt  # Exempting CSRF check for simplicity (remove this in production)

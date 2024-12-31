@@ -18,10 +18,10 @@
       </thead>
       <tbody class="bg-white divide-y divide-gray-200">
         <tr *ngFor="let dpi of filteredData">
-          <td class="px-6 py-4 whitespace-nowrap">{{ dpi.id }}</td>
-          <td class="px-6 py-4 whitespace-nowrap">{{ dpi.patientId }}</td>
-          <td class="px-6 py-4 whitespace-nowrap">{{ dpi.dateCreated }}</td>
-          <td class="px-6 py-4 whitespace-nowrap">{{ dpi.comment }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ dpi.id_dpi }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ dpi.patient }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ dpi.date_creation }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ dpi.commentaire_administratif }}</td>
           <td class="px-6 py-4 whitespace-nowrap">
             <button
               class="bg-white text-gray-900 px-4 py-2 rounded border hover:bg-gray-100 transition"

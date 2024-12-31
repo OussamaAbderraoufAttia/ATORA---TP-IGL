@@ -1,43 +1,60 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
+import { DpiTableService } from '../dpi-table.service';
 
 @Component({
   selector: 'app-dpi-table',
   templateUrl: './dpi-table.component.html',
   styleUrls: ['./dpi-table.component.css'],
-  imports: [CommonModule, FormsModule], // Add FormsModule to the imports arrayimport { Component } from '@angular/core';
-
+  imports: [CommonModule, FormsModule], // Proper syntax
 })
-export class DpiTableComponent {
-searchText: any;
+export class DpiTableComponent implements OnInit {
+  errorMessage: string = ''; // For error messages
+  dpis: any[] = []; // Initialize as an array
+  filteredData: any[] = []; // Initialize as an array
+  searchText: string = ''; // Initialize searchText
+  record: any; // Placeholder for individual record actions
 
-record: any;
-handleRowAction(arg0: any) {
-throw new Error('Method not implemented.');
-}
-  dpis = [
-    {
-      id: 1,
-      patientId: 'P123456789',
-      dateCreated: '12/24/2024, 8:00 AM',
-      comment: 'Patient diagnosed with acute appendicitis and started on antibiotics.',
-      qrCodePath: '/path/to/qr_code1.png',
-    },
-    {
-      id: 2,
-      patientId: 'P987654321',
-      dateCreated: '12/25/2024, 2:30 PM',
-      comment: 'Patient admitted for chronic sinusitis treatment with prescribed medications.',
-      qrCodePath: '/path/to/qr_code2.png',
-    },
-    // Add more rows as needed
-  ];
-  filteredData = [...this.dpis];
-filterTable() {
-  const lowerCaseSearch = this.searchText.toLowerCase();
-  this.filteredData = this.dpis.filter((record) =>
-    record.patientId.toLowerCase().includes(lowerCaseSearch)
-  );
-}
+  constructor(private dpiTableService: DpiTableService) {}
+
+  ngOnInit(): void {
+    this.fetchDpis();
+  }
+
+  /**
+   * Fetch all DPI records from the service.
+   */
+  fetchDpis(): void {
+    this.dpiTableService.getAllDpi().then(
+      (data) => {
+        this.dpis = data || []; // Ensure data is an array
+        this.filteredData = [...this.dpis]; // Copy initial data for filtering
+        console.log('DPI records:', this.dpis);
+      },
+      (error) => {
+        this.errorMessage = 'Failed to load DPI records';
+        console.error('Error fetching DPI records:', error);
+      }
+    );
+  }
+
+  /**
+   * Filter table based on the search text.
+   */
+  filterTable(): void {
+    // Ensure searchText is valid
+    const lowerCaseSearch = this.searchText?.toLowerCase() || '';
+    // Safely filter the data
+    this.filteredData = this.dpis.filter((record: any) =>
+      record?.patient?.toLowerCase().includes(lowerCaseSearch)
+    );
+  }
+
+  /**
+   * Placeholder for handling row actions.
+   */
+  handleRowAction(arg0: any): void {
+    console.log('Row action triggered:', arg0);
+  }
 }

@@ -18,19 +18,7 @@ class Consultation(models.Model):
     def __str__(self):
         return f"Consultation for {self.patient} on {self.date_consultation}"
 
-# Diagnostic model
-class Diagnostic(models.Model):
-    """Represents a medical diagnosis."""
-    diagnostic = models.TextField()
-    date_creation = models.DateTimeField(auto_now_add=True)
-    medecin = models.ForeignKey(Medecin, on_delete=models.CASCADE)
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    consultations = models.ManyToManyField(Consultation)
-    ordonnance = models.ForeignKey('Ordonnance', on_delete=models.SET_NULL, null=True)
-    # examen_complementaire = models.ForeignKey('examinations.ExamenComplementaire', on_delete=models.SET_NULL, null=True)
-
-    def __str__(self):
-        return f"Diagnostic for {self.patient} by Dr. {self.medecin}"
+# Diagnostic model      return f"Diagnostic for {self.patient} by Dr. {self.medecin}"
 
 # Ordonnance model (prescription)
 class Ordonnance(models.Model):
@@ -62,8 +50,15 @@ class Resume(models.Model):
 class Diagnostic(models.Model):
     id_diagnostic = models.AutoField(primary_key=True)
     description = models.TextField()
+    date_creation = models.DateTimeField(auto_now_add=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     medecin = models.ForeignKey(Medecin, on_delete=models.SET_NULL, null=True)
+    consultations = models.ManyToManyField(Consultation)
+    ordonnance = models.ForeignKey('Ordonnance', on_delete=models.SET_NULL, null=True)
+    # examen_complementaire = models.ForeignKey('examinations.ExamenComplementaire', on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return f"Diagnostic for {self.patient} by Dr. {self.medecin}"
 
 class Compte_Rendu(models.Model):
     id_compte_rendu = models.AutoField(primary_key=True)

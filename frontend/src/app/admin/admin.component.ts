@@ -1,18 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css'],
 })
-export class AdminComponent {
+export class AdminComponent implements OnInit {
+  user: any;
+  admin: any = {};
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    // Retrieve the user data from the router state
+    this.user = history.state.user;
+    this.admin = {
+      email: this.user.email,
+      phone: this.user.telephone,
+      joinedDate: this.user.date_creation,
+      profilePicture: 'https://storage.googleapis.com/a1aa/image/nUGcHtlLyyZXPNGfShTygaqy50E9z8P3loTqaPIWQs8yMdfTA.jpg',
+    };
+  }
   // Static admin data
-  admin = {
-    email: 'admin@example.com',
-    phone: '+1 234 567 890',
-    joinedDate: 'January 15, 2022',
-    profilePicture: 'https://storage.googleapis.com/a1aa/image/nUGcHtlLyyZXPNGfShTygaqy50E9z8P3loTqaPIWQs8yMdfTA.jpg',
-  };
+  
 
   handleInputChange(event: Event) {
     const target = event.target as HTMLInputElement;

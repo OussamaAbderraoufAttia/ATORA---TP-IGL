@@ -1,3 +1,4 @@
+from django.contrib.auth.admin import UserAdmin
 from django.contrib import admin
 from .models import Utilisateur, Medecin, Infirmier, Patient, Radiologue, Laboratoire
 
@@ -13,6 +14,13 @@ class UtilisateurAdmin(admin.ModelAdmin):
     list_display = ('nom', 'prenom', 'email', 'user_type', 'is_active', 'is_staff', 'date_creation')
     list_filter = ('user_type', 'is_active', 'is_staff')
     search_fields = ('email', 'nom', 'prenom')
+    def save_model(self, request, obj, form, change):
+        """
+        Overrides the default save_model to ensure passwords are hashed.
+        """
+        if 'password' in form.changed_data:  # Check if the password field was changed
+            obj.set_password(obj.password)
+        super().save_model(request, obj, form, change)
     # inlines = [PatientInline]  # Allows adding Patients directly from the Utilisateur admin
 
 # Register Medecin model

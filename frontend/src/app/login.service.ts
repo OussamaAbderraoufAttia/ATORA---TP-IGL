@@ -8,6 +8,10 @@ import axios from 'axios';
   providedIn: 'root'
 })
 export class LoginService {
+  Login : boolean = false;
+  setlogin(arg0: boolean) {
+    this.Login = arg0;
+  }
   private loginUrl: string;
   private logoutUrl: string;
 
@@ -41,4 +45,7 @@ export class LoginService {
       }
     }
   }
+   isLoggedIn(): boolean {
+     return this.Login // Example implementation
+   }
 }

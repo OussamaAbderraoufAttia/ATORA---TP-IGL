@@ -40,6 +40,9 @@ class Utilisateur(AbstractBaseUser,PermissionsMixin):
         ('medecin', 'Medecin'),
         ('infirmier', 'Infirmier'),
         ('patient', 'Patient'),
+        ('radiologue', 'Radiologue'),
+        ('laboratoire', 'Laboratoire'),
+
     ]
     user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES)
 

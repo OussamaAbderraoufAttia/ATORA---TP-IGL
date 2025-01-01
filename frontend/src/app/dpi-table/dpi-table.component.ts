@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { DpiTableService } from '../dpi-table.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dpi-table',
@@ -15,8 +16,9 @@ export class DpiTableComponent implements OnInit {
   filteredData: any[] = []; // Initialize as an array
   searchText: string = ''; // Initialize searchText
   record: any; // Placeholder for individual record actions
+  
 
-  constructor(private dpiTableService: DpiTableService) {}
+  constructor(private router: Router , private dpiTableService: DpiTableService) { }
 
   ngOnInit(): void {
     this.fetchDpis();
@@ -55,6 +57,6 @@ export class DpiTableComponent implements OnInit {
    * Placeholder for handling row actions.
    */
   handleRowAction(arg0: any): void {
-    console.log('Row action triggered:', arg0);
+    this.router.navigate(['/patient'], { state: { user: arg0.patient } });
   }
 }

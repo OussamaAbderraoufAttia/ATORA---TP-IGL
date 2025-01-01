@@ -89,6 +89,7 @@ class Soin(models.Model):
     description_soin = models.TextField()
     observation_patient = models.TextField()
     status = models.CharField(max_length=20)
+    
 
 class DPI(models.Model):
     id_dpi = models.AutoField(primary_key=True)

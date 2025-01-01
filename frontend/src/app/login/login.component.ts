@@ -28,7 +28,7 @@ export class LoginComponent {
     console.log('Login successful', response);
     localStorage.setItem('isLoggedIn', 'true');
     if (response.user_data.user_type == 'admin') {
-      this.router.navigate(['/admin/profile'], { state: { user: response.user_data } });
+      this.router.navigate(['/profile'], { state: { user: response.user_data } });
     } else if (response.user_data.user_type == 'patient') {
     this.router.navigate(['/patient'], { state: { user: response.user_data } });
     }

@@ -11,6 +11,10 @@ from users.models import (
 from medical_record.models import Diagnostic, Compte_Rendu, CertificatMedical, Hospital, Soin, DPI
 from medical_record.models import DPI
 
+class SoinSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Soin
+        fields = ['id_soin', 'infirmier', 'description_soin', 'date_soin', 'observation_patient']
 
 class DPISerializer(serializers.ModelSerializer):
     class Meta:

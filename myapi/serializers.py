@@ -16,11 +16,7 @@ class SoinSerializer(serializers.ModelSerializer):
         model = Soin
         fields = ['id_soin', 'infirmier', 'description_soin', 'date_soin', 'observation_patient']
 
-class DPISerializer(serializers.ModelSerializer):
-    class Meta:
-        model = DPI
-        fields = ['id_dpi', 'patient', 'date_creation', 'commentaire_administratif', 'chemin_QR_code', 
-                  'diagnostic', 'compte_Rendu', 'certificatMedical', 'hospitalisation', 'soin']
+
 
 
 
@@ -109,3 +105,11 @@ class HospitalSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hospital
         fields = ['id', 'name', 'address', 'contact_number', 'email', 'website']
+
+
+
+class DPISerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DPI
+        fields = ['id_dpi', 'patient', 'date_creation', 'commentaire_administratif', 'chemin_QR_code', 
+                  'diagnostic', 'compte_Rendu', 'certificatMedical', 'hospitalisation', 'soin']

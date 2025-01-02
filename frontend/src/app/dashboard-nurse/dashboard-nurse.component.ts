@@ -23,4 +23,25 @@ this.router.navigate(['/admin/profile']);
     console.log(`Task ${index + 1} completed!`);
     // Logique supplémentaire pour marquer une tâche comme terminée
   }
+  showDialog = false;
+  selectedTask: any = null;
+
+  openDialog(task: any): void {
+    this.selectedTask = { ...task }; // Clone the task object
+    this.showDialog = true;
+  }
+
+  closeDialog(): void {
+    this.showDialog = false;
+    this.selectedTask = null;
+  }
+
+  saveTask(): void {
+    // Update the task in the main list
+    const index = this.tasks.findIndex(task => task.patientName === this.selectedTask.patientName);
+    if (index > -1) {
+      this.tasks[index] = { ...this.selectedTask };
+    }
+    this.closeDialog();
+  }
 }

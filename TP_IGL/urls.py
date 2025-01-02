@@ -21,8 +21,5 @@ from myapi.views import login_view, ForgotPasswordView, DPIListView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/login/', login_view),
-    path('api/dpi/', DPIListView.as_view(), name='dpi-list'), 
-    
- 
-   
+    path('api/dpi/', DPIListView.as_view(), name='dpi-list'),  
 ]

@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+from django.core.validators import RegexValidator
 
 class UtilisateurManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -71,7 +72,13 @@ class Infirmier(models.Model):
     hospital_name = models.ForeignKey('Hospital', on_delete=models.SET_NULL, null=True, blank=True, related_name='infirmiers')
 
 class Patient(models.Model):
-    NSS = models.CharField(max_length=15, primary_key=True)  # National Social Security number
+    NSS = models.CharField(max_length=15, # Fixez la longueur maximale ici
+        validators=[
+            RegexValidator(
+                regex=r'^\w{15}$',  # Exige exactement 10 caractères alphanumériques
+                message="Ce champ doit contenir exactement 15 caractères."
+            )
+        ], primary_key=True,unique=True)  # National Social Security number
     utilisateur = models.OneToOneField(Utilisateur, on_delete=models.CASCADE)
     date_naissance = models.DateField()
     adresse = models.CharField(max_length=200)

@@ -93,15 +93,15 @@ class Soin(models.Model):
 
 class DPI(models.Model):
     id_dpi = models.AutoField(primary_key=True)
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE,unique=True)
     date_creation = models.DateTimeField(auto_now_add=True)
     commentaire_administratif = models.TextField()
     chemin_QR_code = models.CharField(max_length=255)
-    diagnostic = models.ForeignKey(Diagnostic, on_delete=models.SET_NULL, null=True)
-    compte_Rendu = models.ForeignKey(Compte_Rendu, on_delete=models.SET_NULL, null=True)
-    certificatMedical = models.ForeignKey(CertificatMedical, on_delete=models.SET_NULL, null=True)
-    hospitalisation = models.ForeignKey(Hospital, on_delete=models.SET_NULL, null=True)
-    soin = models.ForeignKey(Soin, on_delete=models.SET_NULL, null=True)
+    diagnostic = models.ForeignKey(Diagnostic, on_delete=models.SET_NULL, null=True,blank=True,)
+    compte_Rendu = models.ForeignKey(Compte_Rendu, on_delete=models.SET_NULL, null=True,blank=True)
+    certificatMedical = models.ForeignKey(CertificatMedical, on_delete=models.SET_NULL, null=True,blank=True)
+    hospitalisation = models.ForeignKey(Hospital, on_delete=models.SET_NULL, null=True,blank=True)
+    soin = models.ForeignKey(Soin, on_delete=models.SET_NULL, null=True,blank=True)
     
     
     

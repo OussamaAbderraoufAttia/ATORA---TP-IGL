@@ -40,7 +40,7 @@
                   <td class="py-2 px-4 border-b">
                     <button
                       class="bg-blue-500 text-white px-4 py-2 rounded"
-                      (click)="completeTask(i)"
+                      (click)="openDialog(task)"
                     >
                       Complete
                     </button>
@@ -59,4 +59,45 @@
       <p>© 2023 ATORA. All rights reserved.</p>
     </div>
   </footer>
+  <div *ngIf="showDialog" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+      <h2 class="text-xl font-bold mb-4">Update Status</h2>
+      <div>
+        <div class="mb-4">
+          <label for="patientName" class="block text-sm font-medium text-gray-700">Patient Name</label>
+          <input
+            type="text"
+            id="patientName"
+            name="patientName"
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            readonly
+          />
+        </div>
+        <div class="mb-4">
+          <label for="observation" class="block text-sm font-medium text-gray-700">Observation</label>
+          <input
+            type="text"
+            id="observation"
+            name="observation"
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+          <input
+            type="text"
+            id="status"
+            
+            name="status"
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          />
+        </div>
+        <div class="flex justify-end">
+          <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded mr-2" (click)="closeDialog()">Cancel</button>
+          <button (click)="saveTask()" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   

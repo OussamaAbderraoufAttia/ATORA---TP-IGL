@@ -1,6 +1,7 @@
-.history
+.history/
 __pycache__/
 *.py[cod]
 *.pyo
 venv/
 .env
+

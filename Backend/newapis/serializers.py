@@ -116,7 +116,7 @@ class DpiCreateSerializer(serializers.Serializer):
     birth_date = serializers.DateField()
     location = serializers.CharField()
     contact_number = serializers.CharField(max_length=15)
-    insurance = serializers.CharField(max_length=100)
+    insurance = serializers.CharField(max_length=100, required=False)
     emergency_contact = serializers.CharField(max_length=100)
     doctor_full_name = serializers.CharField(max_length=200)
 
@@ -150,9 +150,10 @@ class DpiCreateSerializer(serializers.Serializer):
                 "email": email,
                 "prenom": validated_attrs["nom"],
                 "nom": validated_attrs["nom"],
-                "role": Utilisateur.PATIENT,
-                "password": f"{validated_attrs['nss']}#2024",
-                "password2": f"{validated_attrs['nss']}#2024"
+                "account_type": Utilisateur.PATIENT,
+                "telephone": validated_attrs["contact_number"],
+                "auth_key": f"{validated_attrs['nss']}A2024",
+                "auth_key_confirmation": f"{validated_attrs['nss']}A2024"
             }
             
             user_serializer = AccountRegistrationSerializer(data=user_data)
@@ -164,7 +165,6 @@ class DpiCreateSerializer(serializers.Serializer):
                 NSS=validated_attrs["nss"],
                 date_naissance=validated_attrs["birth_date"],
                 adresse=validated_attrs["location"],
-                telephone=validated_attrs.get("contact_number", ""),
                 mutuelle=validated_attrs["insurance"],
                 personne_contact_nom=validated_attrs["emergency_contact"]
             )

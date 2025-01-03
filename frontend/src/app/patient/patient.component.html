@@ -1,135 +1,637 @@
-<<<<<<< HEAD
-<div class="w-full max-w-4xl mx-auto shadow-lg">
-    <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-4">
-      <div class="flex items-center space-x-4">
-        <div class="w-20 h-20 border-4 border-white rounded-full flex items-center justify-center bg-blue-500 text-3xl font-bold">
-          {{ patient.firstName[0] }}{{ patient.lastName[0] }}
-        </div>
-        <div>
-          <h2 class="text-3xl">{{ patient.firstName }} {{ patient.lastName }}</h2>
-          <p class="text-blue-100">Numéro Sécurité Sociale: {{ patient.securityNumber }}</p>
-        </div>
-      </div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<header class="bg-blue-600 text-white p-4">
+  <div class="container mx-auto flex justify-between items-center">
+    <div class="rounded-full bg-blue-600 mx-5 w-32 h-12 flex items-center justify-center font-bold">
+      <img class="" src="https://i.ibb.co/t44RYBf/logo-Atora.png" alt="Logo">
+      <h1 class="text-2xl font-bold">ATORA</h1>
+  </div>
+    
+    <nav>
+      <ul class="flex space-x-4">
+          <button
+          class="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition"
+          (click)="navigateToProfile()"
+        >
+          Profile
+        </button>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+<div class="container mx-auto max-w-lg mt-10 shadow-lg rounded-lg overflow-hidden">
+  <!-- Header -->
+  <div class="bg-blue-500 text-white p-4 flex items-center">
+    <div class="rounded-full bg-blue-700 w-12 h-12 flex items-center justify-center font-bold">
+      MD
     </div>
-    <div class="p-6">
-      <div class="flex space-x-4 mb-4">
-        <button (click)="setActiveTab('personal')" [class.active]="activeTab === 'personal'">Informations Personnelles</button>
-        <button (click)="setActiveTab('medical')" [class.active]="activeTab === 'medical'">Informations Médicales</button>
-        <button (click)="setActiveTab('emergency')" [class.active]="activeTab === 'emergency'">Contact d'Urgence</button>
-      </div>
-      <div *ngIf="activeTab === 'personal'" class="space-y-4">
-        <app-info-item icon="📅" label="Date de Naissance" [value]="patient.dateOfBirth"></app-info-item>
-        <app-info-item icon="🏠" label="Adresse" [value]="patient.address"></app-info-item>
-        <app-info-item icon="📞" label="Téléphone" [value]="patient.phone"></app-info-item>
-      </div>
-      <div *ngIf="activeTab === 'medical'" class="space-y-4">
-        <app-info-item icon="💊" label="Mutuelle" [value]="patient.insurance"></app-info-item>
-        <app-info-item icon="👨‍⚕️" label="Médecin Traitant" [value]="patient.doctor"></app-info-item>
-      </div>
-      <div *ngIf="activeTab === 'emergency'" class="space-y-4">
-        <app-info-item icon="👥" label="Personne de Contact" [value]="patient.emergencyContact"></app-info-item>
-        <app-info-item icon="📞" label="Téléphone de Contact" [value]="patient.emergencyPhone"></app-info-item>
-      </div>
+    <div class="ml-4">
+      <h2 class="text-lg font-bold">Madelynn Doe</h2>
+      <p class="text-sm">Numéro Sécurité Sociale: 794-555-4265-XS215</p>
     </div>
   </div>
-=======
-<div class="mb-8 w-32 top-0 left-0 ml-2 mt-2">
-    <img src="https://i.ibb.co/t44RYBf/logo-Atora.png" alt="Logo" >
- </div>
-<div class="container mx-auto max-w-lg mt-10 shadow-lg rounded-lg overflow-hidden">
-    <!-- Header -->
-    <div class="bg-blue-500 text-white p-4 flex items-center">
-      <div class="rounded-full bg-blue-700 w-12 h-12 flex items-center justify-center font-bold">
-        MD
-      </div>
-      <div class="ml-4">
-        <h2 class="text-lg font-bold">Madelynn Doe</h2>
-        <p class="text-sm">Numéro Sécurité Sociale: 794-555-4265-XS215</p>
-      </div>
-    </div>
-  
-    <!-- Tab Buttons -->
-    <div class="bg-gray-100 flex justify-around p-4">
-        <div class="bg-gray-200 flex p-2 rounded-lg">
-      <button
-        class="px-4 py-2 text-sm font-semibold rounded-md transition-all ml-2 mr-2"
-        [class.bg-white]="activeTab === 'personal'"
-        [class.text-black]="activeTab === 'personal'"
-        [class.text-gray-700]="activeTab !== 'personal'"
-        [class.bg-gray-200]="activeTab !== 'personal'"
-        (click)="setActiveTab('personal')"
-      >
+
+  <!-- Tab Buttons -->
+  <div class="bg-gray-100 flex justify-around p-4">
+    <div class="bg-gray-200 flex p-2 rounded-lg">
+      <button class="px-4 py-2 text-sm font-semibold rounded-md transition-all ml-2 mr-2" [class.bg-white]="activeTab === 'personal'" [class.text-black]="activeTab === 'personal'" [class.text-gray-700]="activeTab !== 'personal'" [class.bg-gray-200]="activeTab !== 'personal'" (click)="setActiveTab('personal')">
         Informations Personnelles
       </button>
-      <button
-        class="px-4 py-2 text-sm font-semibold rounded-md transition-all ml-2 mr-2"
-        [class.bg-white]="activeTab === 'medical'"
-        [class.text-black]="activeTab === 'medical'"
-        [class.text-gray-700]="activeTab !== 'medical'"
-        [class.bg-gray-200]="activeTab !== 'medical'"
-        (click)="setActiveTab('medical')"
-      >
+      <button class="px-4 py-2 text-sm font-semibold rounded-md transition-all ml-2 mr-2" [class.bg-white]="activeTab === 'medical'" [class.text-black]="activeTab === 'medical'" [class.text-gray-700]="activeTab !== 'medical'" [class.bg-gray-200]="activeTab !== 'medical'" (click)="setActiveTab('medical')">
         Informations Médicales
       </button>
-      <button
-        class="px-4 py-2 text-sm font-semibold rounded-md transition-all ml-2 mr-2"
-        [class.bg-white]="activeTab === 'contact'"
-        [class.text-black]="activeTab === 'contact'"
-        [class.text-gray-700]="activeTab !== 'contact'"
-        [class.bg-gray-200]="activeTab !== 'contact'"
-        (click)="setActiveTab('contact')"
-      >
+      <button class="px-4 py-2 text-sm font-semibold rounded-md transition-all ml-2 mr-2" [class.bg-white]="activeTab === 'contact'" [class.text-black]="activeTab === 'contact'" [class.text-gray-700]="activeTab !== 'contact'" [class.bg-gray-200]="activeTab !== 'contact'" (click)="setActiveTab('contact')">
         Contact d'Urgence
       </button>
     </div>
+  </div>
+
+  <!-- Content -->
+  <div class="bg-white p-6">
+    <div [style.display]="activeTab === 'personal' ? 'block' : 'none'">
+      <div class="bg-slate-300 flex items-center rounded-md p-2 mb-4">
+        <img class="w-10 h-10 mr-4" src="https://i.ibb.co/GTrZnpK/date.png" alt="date">
+        <div><p class="text-sm mb-1 font-bold">Date de Naissance</p>
+        <p class="text-sm"> 15/05/1985</p></div>
+      </div>
+      <div class="bg-slate-300 flex items-center rounded-md p-2 mb-4">
+        <img class="w-10 h-10 mr-4" src="https://i.ibb.co/7vKtRMD/maison.png" alt="adresse">
+        <div><p class="text-sm mb-1 font-bold">Adresse</p>
+        <p class="text-sm"> 4703 Davis Trace</p></div>
+      </div>
+      <div class="bg-slate-300 flex items-center rounded-md p-2 mb-4">
+        <img class="w-10 h-10 mr-4" src="https://i.ibb.co/n61hrMv/appel.png" alt="phone">
+        <div><p class="text-sm mb-1 font-bold">Téléphone</p>
+        <p class="text-sm">212-456-8908</p></div>
+      </div>
     </div>
-  
-    <!-- Content -->
-    <div class="bg-white p-6">
-      <div [style.display]="activeTab === 'personal' ? 'block' : 'none'">
-        <div class="bg-slate-300 flex items-center rounded-md p-2 mb-4">
-            <img class="w-10 h-10 mr-4" src="https://i.ibb.co/GTrZnpK/date.png" alt="date" >
-            <div><p class="text-sm mb-1 font-bold">Date de Naissance</p>
-            <p class="text-sm"> 15/05/1985</p></div>
-        </div>
-        <div class="bg-slate-300 flex items-center rounded-md p-2 mb-4">
-            <img class="w-10 h-10 mr-4" src="https://i.ibb.co/7vKtRMD/maison.png" alt="adresse" >
-            <div><p class="text-sm mb-1 font-bold">adresse</p>
-            <p class="text-sm"> 4703 Davis Trace</p></div>
-        </div>
-        <div class="bg-slate-300 flex items-center rounded-md p-2 mb-4">
-            <img class="w-10 h-10 mr-4" src="https://i.ibb.co/n61hrMv/appel.png" alt="phone" >
-            <div><p class="text-sm mb-1 font-bold">Téléphone</p>
-            <p class="text-sm">212-456-8908</p></div>
-        </div>
+
+    <div [style.display]="activeTab === 'medical' ? 'block' : 'none'">
+      <div class="bg-slate-300 flex items-center rounded-md p-2 mb-4">
+        <img class="w-10 h-10 mr-4" src="https://i.ibb.co/7WC5DbM/coeur.png" alt="coeur">
+        <div><p class="text-sm mb-1 font-bold">Mutuelle</p>
+        <p class="text-sm"> Mutuelle X</p></div>
       </div>
-      <!--<img src="https://i.ibb.co/N3Gg0Vy/ajouter-un-utilisateur.png" alt="ajouter-un-utilisateur" border="0"><img src="https://i.ibb.co/Ws2jBrv/client.png" alt="client" border="0"><img src="https://i.ibb.co/7WC5DbM/coeur.png" alt="coeur" border="0">-->
-      <div [style.display]="activeTab === 'medical' ? 'block' : 'none'">
-        <div class="bg-slate-300 flex items-center rounded-md p-2 mb-4">
-            <img class="w-10 h-10 mr-4" src="https://i.ibb.co/7WC5DbM/coeur.png" alt="coeur" >
-            <div><p class="text-sm mb-1 font-bold">Mutuelle</p>
-            <p class="text-sm"> Mutuelle X</p></div>
-        </div>
-        <div class="bg-slate-300 flex items-center rounded-md p-2 mb-4">
-            <img class="w-10 h-10 mr-4" src="https://i.ibb.co/Ws2jBrv/client.png" alt="medecin" >
-            <div><p class="text-sm mb-1 font-bold">Médecin Traitant</p>
-            <p class="text-sm"> Dr. Katherine Fell</p></div>
-        </div>
+      <div class="bg-slate-300 flex items-center rounded-md p-2 mb-4">
+        <img class="w-10 h-10 mr-4" src="https://i.ibb.co/Ws2jBrv/client.png" alt="medecin">
+        <div><p class="text-sm mb-1 font-bold">Médecin Traitant</p>
+        <p class="text-sm"> Dr. Katherine Fell</p></div>
       </div>
-  
-      <div [style.display]="activeTab === 'contact' ? 'block' : 'none'">
-        <div class="bg-slate-300 flex items-center rounded-md p-2 mb-4">
-            <img class="w-10 h-10 mr-4" src="https://i.ibb.co/N3Gg0Vy/ajouter-un-utilisateur.png" alt="personne de contact" >
-            <div><p class="text-sm mb-1 font-bold">Personne de Contact</p>
-            <p class="text-sm"> Terry Schimmel</p></div>
-        </div>
-        <div class="bg-slate-300 flex items-center rounded-md p-2 mb-4">
-            <img class="w-10 h-10 mr-4" src="https://i.ibb.co/n61hrMv/appel.png" alt="tel" >
-            <div><p class="text-sm mb-1 font-bold">Téléphone du Contact</p>
-            <p class="text-sm">212-678-2134 </p></div>
-        </div>
+    </div>
+
+    <div [style.display]="activeTab === 'contact' ? 'block' : 'none'">
+      <div class="bg-slate-300 flex items-center rounded-md p-2 mb-4">
+        <img class="w-10 h-10 mr-4" src="https://i.ibb.co/N3Gg0Vy/ajouter-un-utilisateur.png" alt="personne de contact">
+        <div><p class="text-sm mb-1 font-bold">Personne de Contact</p>
+        <p class="text-sm"> Terry Schimmel</p></div>
+      </div>
+      <div class="bg-slate-300 flex items-center rounded-md p-2 mb-4">
+        <img class="w-10 h-10 mr-4" src="https://i.ibb.co/n61hrMv/appel.png" alt="tel">
+        <div><p class="text-sm mb-1 font-bold">Téléphone du Contact</p>
+        <p class="text-sm">212-678-2134</p></div>
       </div>
     </div>
   </div>
-  
->>>>>>> 051e9f9962861fe12f69190558fbb6952edf26b6
+</div>
+
+<!-- Consultation Card -->
+<div class="container mx-auto max-w-lg mt-10 shadow-lg rounded-lg overflow-hidden">
+  <div class="bg-blue-500 text-white p-4 flex items-center justify-between">
+    <h2 class="text-lg font-bold">Consultations</h2>
+    <div>
+      <button class="px-4 py-2 bg-blue-700 text-white rounded-md mr-2" (click)="openModal()">View Consultations</button>
+      <button class="px-4 py-2 bg-green-500 text-white rounded-md" (click)="openAddConsultationModal()">Add Consultation</button>
+    </div>
+  </div>
+</div>
+
+<!-- Consultation Modal -->
+<div *ngIf="isModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-lg w-full max-w-4xl mx-4 overflow-hidden" style="width: 800px; height: 600px;">
+    <!-- Modal Header -->
+    <div class="flex justify-between items-center bg-blue-500 text-white p-4">
+      <h2 class="text-lg font-bold">Consultation Details</h2>
+      <button class="text-white hover:text-gray-200" (click)="closeModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="p-4 overflow-auto" style="max-height: calc(100% - 64px);">
+      <table class="min-w-full bg-white">
+        <thead>
+          <tr>
+            <th class="py-2 px-4 border-b">Consultation</th>
+            <th class="py-2 px-4 border-b">Date</th>
+            <th class="py-2 px-4 border-b">Outils</th>
+            <th class="py-2 px-4 border-b">Description</th>
+            <th class="py-2 px-4 border-b">Text</th>
+            <th class="py-2 px-4 border-b">Antecedents</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let consultation of consultations">
+            <td class="py-2 px-4 border-b">{{ consultation.consultation }}</td>
+            <td class="py-2 px-4 border-b">{{ consultation.date_consultation }}</td>
+            <td class="py-2 px-4 border-b">{{ consultation.outils }}</td>
+            <td class="py-2 px-4 border-b">{{ consultation.description }}</td>
+            <td class="py-2 px-4 border-b">{{ consultation.text }}</td>
+            <td class="py-2 px-4 border-b">
+              <ul>
+                <li *ngFor="let item of getAntecedentKeys(consultation.antecedents)">
+                  <strong>{{ item.label }}:</strong> {{ consultation.antecedents[item.key] }}
+                </li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Add Consultation Modal -->
+<div *ngIf="isAddConsultationModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-lg w-full max-w-2xl mx-4 overflow-hidden" style="width: 600px; height: 500px;">
+    <!-- Modal Header -->
+    <div class="flex justify-between items-center bg-blue-500 text-white p-4">
+      <h2 class="text-lg font-bold">Add Consultation</h2>
+      <button class="text-white hover:text-gray-200" (click)="closeAddConsultationModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="p-4 overflow-auto" style="max-height: calc(100% - 64px);">
+      <form (ngSubmit)="addConsultation()">
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Consultation ID</label>
+          <input type="number" class="w-full p-2 border rounded" [(ngModel)]="newConsultation.consultation" name="consultation" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Date</label>
+          <input type="datetime-local" class="w-full p-2 border rounded" [(ngModel)]="newConsultation.date_consultation" name="date_consultation" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Outils</label>
+          <input type="text" class="w-full p-2 border rounded" [(ngModel)]="newConsultation.outils" name="outils" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Description</label>
+          <input type="text" class="w-full p-2 border rounded" [(ngModel)]="newConsultation.description" name="description" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Text</label>
+          <textarea class="w-full p-2 border rounded" [(ngModel)]="newConsultation.text" name="text" required></textarea>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Antecedents</label>
+          <div class="space-y-2">
+            <input type="text" class="w-full p-2 border rounded" [(ngModel)]="newConsultation.antecedents.allergies" name="allergies" placeholder="Allergies" required>
+            <input type="text" class="w-full p-2 border rounded" [(ngModel)]="newConsultation.antecedents.medical_history" name="medical_history" placeholder="Medical History" required>
+            <input type="text" class="w-full p-2 border rounded" [(ngModel)]="newConsultation.antecedents.family_history" name="family_history" placeholder="Family History" required>
+          </div>
+        </div>
+        <div class="flex justify-end">
+          <button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md mr-2" (click)="closeAddConsultationModal()">Cancel</button>
+          <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Bilans Biologiques Card -->
+<div class="container mx-auto max-w-lg mt-10 shadow-lg rounded-lg overflow-hidden">
+  <div class="bg-green-500 text-white p-4 flex items-center justify-between">
+    <h2 class="text-lg font-bold">Bilans Biologiques</h2>
+    <div>
+      <button class="px-4 py-2 bg-green-700 text-white rounded-md mr-2" (click)="openBilanModal()">View Bilans</button>
+      <button class="px-4 py-2 bg-blue-500 text-white rounded-md" (click)="openAddBilanModal()">Add Bilan</button>
+    </div>
+  </div>
+</div>
+
+<!-- Bilans Biologiques Modal -->
+<div *ngIf="isBilanModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-lg w-full max-w-4xl mx-4 overflow-hidden" style="width: 800px; height: 600px;">
+    <!-- Modal Header -->
+    <div class="flex justify-between items-center bg-green-500 text-white p-4">
+      <h2 class="text-lg font-bold">Bilans Biologiques Details</h2>
+      <button class="text-white hover:text-gray-200" (click)="closeBilanModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="p-4 overflow-auto" style="max-height: calc(100% - 64px);">
+      <table class="min-w-full bg-white">
+        <thead>
+          <tr>
+            <th class="py-2 px-4 border-b">ID</th>
+            <th class="py-2 px-4 border-b">Date</th>
+            <th class="py-2 px-4 border-b">Laboratoire ID</th>
+            <th class="py-2 px-4 border-b">Parametre</th>
+            <th class="py-2 px-4 border-b">Valeur</th>
+            <th class="py-2 px-4 border-b">Unite</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let bilan of bilansBiologiques">
+            <td class="py-2 px-4 border-b">{{ bilan.id_bilan_biologique }}</td>
+            <td class="py-2 px-4 border-b">{{ bilan.date_bilan }}</td>
+            <td class="py-2 px-4 border-b">{{ bilan.laboratoire_id }}</td>
+            <td class="py-2 px-4 border-b">{{ bilan.parametre }}</td>
+            <td class="py-2 px-4 border-b">{{ bilan.valeur }}</td>
+            <td class="py-2 px-4 border-b">{{ bilan.unite }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Add Bilan Biologique Modal -->
+<div *ngIf="isAddBilanModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-lg w-full max-w-2xl mx-4 overflow-hidden" style="width: 600px; height: 500px;">
+    <!-- Modal Header -->
+    <div class="flex justify-between items-center bg-green-500 text-white p-4">
+      <h2 class="text-lg font-bold">Add Bilan Biologique</h2>
+      <button class="text-white hover:text-gray-200" (click)="closeAddBilanModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="p-4 overflow-auto" style="max-height: calc(100% - 64px);">
+      <form (ngSubmit)="addBilanBiologique()">
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">ID</label>
+          <input type="number" class="w-full p-2 border rounded" [(ngModel)]="newBilanBiologique.id_bilan_biologique" name="id_bilan_biologique" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Date</label>
+          <input type="datetime-local" class="w-full p-2 border rounded" [(ngModel)]="newBilanBiologique.date_bilan" name="date_bilan" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Laboratoire ID</label>
+          <input type="number" class="w-full p-2 border rounded" [(ngModel)]="newBilanBiologique.laboratoire_id" name="laboratoire_id" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Parametre</label>
+          <input type="text" class="w-full p-2 border rounded" [(ngModel)]="newBilanBiologique.parametre" name="parametre" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Valeur</label>
+          <input type="number" class="w-full p-2 border rounded" [(ngModel)]="newBilanBiologique.valeur" name="valeur" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Unite</label>
+          <input type="text" class="w-full p-2 border rounded" [(ngModel)]="newBilanBiologique.unite" name="unite" required>
+        </div>
+        <div class="flex justify-end">
+          <button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md mr-2" (click)="closeAddBilanModal()">Cancel</button>
+          <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded-md">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Soins Card -->
+<div class="container mx-auto max-w-lg mt-10 shadow-lg rounded-lg overflow-hidden">
+  <div class="bg-purple-500 text-white p-4 flex items-center justify-between">
+    <h2 class="text-lg font-bold">Soins</h2>
+    <div>
+      <button class="px-4 py-2 bg-purple-700 text-white rounded-md mr-2" (click)="openSoinsModal()">View Soins</button>
+      <button class="px-4 py-2 bg-blue-500 text-white rounded-md" (click)="openAddSoinsModal()">Add Soin</button>
+    </div>
+  </div>
+</div>
+
+<!-- Soins Modal -->
+<div *ngIf="isSoinsModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-lg w-full max-w-4xl mx-4 overflow-hidden" style="width: 800px; height: 600px;">
+    <!-- Modal Header -->
+    <div class="flex justify-between items-center bg-purple-500 text-white p-4">
+      <h2 class="text-lg font-bold">Soins Details</h2>
+      <button class="text-white hover:text-gray-200" (click)="closeSoinsModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="p-4 overflow-auto" style="max-height: calc(100% - 64px);">
+      <table class="min-w-full bg-white">
+        <thead>
+          <tr>
+            <th class="py-2 px-4 border-b">ID</th>
+            <th class="py-2 px-4 border-b">Date</th>
+            <th class="py-2 px-4 border-b">Infirmier Name</th>
+            <th class="py-2 px-4 border-b">Description</th>
+            <th class="py-2 px-4 border-b">Observation</th>
+            <th class="py-2 px-4 border-b">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let soin of soins">
+            <td class="py-2 px-4 border-b">{{ soin.id_soin }}</td>
+            <td class="py-2 px-4 border-b">{{ soin.date_soin }}</td>
+            <td class="py-2 px-4 border-b">{{ soin.infirmier_name }}</td>
+            <td class="py-2 px-4 border-b">{{ soin.description_soin }}</td>
+            <td class="py-2 px-4 border-b">{{ soin.observation_patient }}</td>
+            <td class="py-2 px-4 border-b">{{ soin.status }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Add Soin Modal -->
+<div *ngIf="isAddSoinsModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-lg w-full max-w-2xl mx-4 overflow-hidden" style="width: 600px; height: 500px;">
+    <!-- Modal Header -->
+    <div class="flex justify-between items-center bg-purple-500 text-white p-4">
+      <h2 class="text-lg font-bold">Add Soin</h2>
+      <button class="text-white hover:text-gray-200" (click)="closeAddSoinsModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="p-4 overflow-auto" style="max-height: calc(100% - 64px);">
+      <form (ngSubmit)="addSoin()">
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">ID</label>
+          <input type="number" class="w-full p-2 border rounded" [(ngModel)]="newSoin.id_soin" name="id_soin" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Date</label>
+          <input type="datetime-local" class="w-full p-2 border rounded" [(ngModel)]="newSoin.date_soin" name="date_soin" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Infirmier Name</label>
+          <input type="text" class="w-full p-2 border rounded" [(ngModel)]="newSoin.infirmier_name" name="infirmier_name" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Description</label>
+          <input type="text" class="w-full p-2 border rounded" [(ngModel)]="newSoin.description_soin" name="description_soin" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Observation</label>
+          <textarea class="w-full p-2 border rounded" [(ngModel)]="newSoin.observation_patient" name="observation_patient" required></textarea>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Status</label>
+          <input type="text" class="w-full p-2 border rounded" [(ngModel)]="newSoin.status" name="status" required>
+        </div>
+        <div class="flex justify-end">
+          <button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md mr-2" (click)="closeAddSoinsModal()">Cancel</button>
+          <button type="submit" class="px-4 py-2 bg-purple-500 text-white rounded-md">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Diagnostics Card -->
+<div class="container mx-auto max-w-lg mt-10 shadow-lg rounded-lg overflow-hidden">
+  <div class="bg-orange-500 text-white p-4 flex items-center justify-between">
+    <h2 class="text-lg font-bold">Diagnostics</h2>
+    <div>
+      <button class="px-4 py-2 bg-orange-700 text-white rounded-md mr-2" (click)="openDiagnosticsModal()">View Diagnostics</button>
+      <button class="px-4 py-2 bg-blue-500 text-white rounded-md" (click)="openAddDiagnosticsModal()">Add Diagnostic</button>
+    </div>
+  </div>
+</div>
+
+<!-- Diagnostics Modal -->
+<div *ngIf="isDiagnosticsModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-lg w-full max-w-4xl mx-4 overflow-hidden" style="width: 800px; height: 600px;">
+    <!-- Modal Header -->
+    <div class="flex justify-between items-center bg-orange-500 text-white p-4">
+      <h2 class="text-lg font-bold">Diagnostics Details</h2>
+      <button class="text-white hover:text-gray-200" (click)="closeDiagnosticsModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="p-4 overflow-auto" style="max-height: calc(100% - 64px);">
+      <table class="min-w-full bg-white">
+        <thead>
+          <tr>
+            <th class="py-2 px-4 border-b">ID</th>
+            <th class="py-2 px-4 border-b">Diagnostic</th>
+            <th class="py-2 px-4 border-b">Date</th>
+            <th class="py-2 px-4 border-b">Medecin Name</th>
+            <th class="py-2 px-4 border-b">Consultations</th>
+            <th class="py-2 px-4 border-b">Ordonnance ID</th>
+            <th class="py-2 px-4 border-b">Validated</th>
+            <th class="py-2 px-4 border-b">Description Examen</th>
+            <th class="py-2 px-4 border-b">Bilan Biologique ID</th>
+            <th class="py-2 px-4 border-b">Bilan Radiologique ID</th>
+            <th class="py-2 px-4 border-b">Medicament Names</th>
+            <th class="py-2 px-4 border-b">Medicament Doses</th>
+            <th class="py-2 px-4 border-b">Medicament Duree</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let diagnostic of diagnostics">
+            <td class="py-2 px-4 border-b">{{ diagnostic.id_diagnostic }}</td>
+            <td class="py-2 px-4 border-b">{{ diagnostic.diagnostic }}</td>
+            <td class="py-2 px-4 border-b">{{ diagnostic.date_creation }}</td>
+            <td class="py-2 px-4 border-b">{{ diagnostic.medecin_name }}</td>
+            <td class="py-2 px-4 border-b">{{ diagnostic.consultations }}</td>
+            <td class="py-2 px-4 border-b">{{ diagnostic.ordonnance_id }}</td>
+            <td class="py-2 px-4 border-b">{{ diagnostic.validated }}</td>
+            <td class="py-2 px-4 border-b">{{ diagnostic.description_examen_complementaire }}</td>
+            <td class="py-2 px-4 border-b">{{ diagnostic.bilan_Biologique_id }}</td>
+            <td class="py-2 px-4 border-b">{{ diagnostic.bilan_Radiologique_id }}</td>
+            <td class="py-2 px-4 border-b">{{ diagnostic.medicament_names }}</td>
+            <td class="py-2 px-4 border-b">{{ diagnostic.medicament_doses }}</td>
+            <td class="py-2 px-4 border-b">{{ diagnostic.medicament_duree_traitement }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Add Diagnostic Modal -->
+<div *ngIf="isAddDiagnosticsModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-lg w-full max-w-2xl mx-4 overflow-hidden" style="width: 600px; height: 500px;">
+    <!-- Modal Header -->
+    <div class="flex justify-between items-center bg-orange-500 text-white p-4">
+      <h2 class="text-lg font-bold">Add Diagnostic</h2>
+      <button class="text-white hover:text-gray-200" (click)="closeAddDiagnosticsModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="p-4 overflow-auto" style="max-height: calc(100% - 64px);">
+      <form (ngSubmit)="addDiagnostic()">
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">ID</label>
+          <input type="number" class="w-full p-2 border rounded" [(ngModel)]="newDiagnostic.id_diagnostic" name="id_diagnostic" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Diagnostic</label>
+          <input type="text" class="w-full p-2 border rounded" [(ngModel)]="newDiagnostic.diagnostic" name="diagnostic" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Date</label>
+          <input type="datetime-local" class="w-full p-2 border rounded" [(ngModel)]="newDiagnostic.date_creation" name="date_creation" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Medecin Name</label>
+          <input type="text" class="w-full p-2 border rounded" [(ngModel)]="newDiagnostic.medecin_name" name="medecin_name" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Consultations</label>
+          <input type="number" class="w-full p-2 border rounded" [(ngModel)]="newDiagnostic.consultations" name="consultations" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Ordonnance ID</label>
+          <input type="number" class="w-full p-2 border rounded" [(ngModel)]="newDiagnostic.ordonnance_id" name="ordonnance_id" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Validated</label>
+          <input type="text" class="w-full p-2 border rounded" [(ngModel)]="newDiagnostic.validated" name="validated" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Description Examen</label>
+          <textarea class="w-full p-2 border rounded" [(ngModel)]="newDiagnostic.description_examen_complementaire" name="description_examen_complementaire" required></textarea>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Bilan Biologique ID</label>
+          <input type="number" class="w-full p-2 border rounded" [(ngModel)]="newDiagnostic.bilan_Biologique_id" name="bilan_Biologique_id">
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Bilan Radiologique ID</label>
+          <input type="number" class="w-full p-2 border rounded" [(ngModel)]="newDiagnostic.bilan_Radiologique_id" name="bilan_Radiologique_id">
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Medicament Names</label>
+          <input type="text" class="w-full p-2 border rounded" [(ngModel)]="newDiagnostic.medicament_names" name="medicament_names" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Medicament Doses</label>
+          <input type="text" class="w-full p-2 border rounded" [(ngModel)]="newDiagnostic.medicament_doses" name="medicament_doses" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Medicament Duree</label>
+          <input type="text" class="w-full p-2 border rounded" [(ngModel)]="newDiagnostic.medicament_duree_traitement" name="medicament_duree_traitement" required>
+        </div>
+        <div class="flex justify-end">
+          <button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md mr-2" (click)="closeAddDiagnosticsModal()">Cancel</button>
+          <button type="submit" class="px-4 py-2 bg-orange-500 text-white rounded-md">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Bilans Radiologiques Card -->
+<div class="container my-4 mx-auto max-w-lg mt-10 shadow-lg rounded-lg overflow-hidden">
+  <div class="bg-teal-500 text-white p-4 flex items-center justify-between">
+    <h2 class="text-lg font-bold">Bilans Radiologiques</h2>
+    <div class="flex items-center">
+      <button class="px-4 py-2 bg-teal-700 text-white rounded-md mr-2" (click)="openBilansRadioModal()">View Bilans Radio</button>
+      <button class="px-4 py-2 bg-blue-500 text-white rounded-md" (click)="openAddBilansRadioModal()">Add Bilan Radio</button>
+    </div>
+  </div>
+</div>
+
+<!-- Bilans Radiologiques Modal -->
+<div *ngIf="isBilansRadioModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-lg w-full max-w-4xl mx-4 overflow-hidden" style="width: 800px; height: 600px;">
+    <!-- Modal Header -->
+    <div class="flex justify-between items-center bg-teal-500 text-white p-4">
+      <h2 class="text-lg font-bold">Bilans Radiologiques Details</h2>
+      <button class="text-white hover:text-gray-200" (click)="closeBilansRadioModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="p-4 overflow-auto" style="max-height: calc(100% - 64px);">
+      <table class="min-w-full bg-white">
+        <thead>
+          <tr>
+            <th class="py-2 px-4 border-b">ID</th>
+            <th class="py-2 px-4 border-b">Date</th>
+            <th class="py-2 px-4 border-b">Radiologue Name</th>
+            <th class="py-2 px-4 border-b">Type</th>
+            <th class="py-2 px-4 border-b">Image</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let bilanRadio of bilansRadiologiques">
+            <td class="py-2 px-4 border-b">{{ bilanRadio.id_examen }}</td>
+            <td class="py-2 px-4 border-b">{{ bilanRadio.date_examen }}</td>
+            <td class="py-2 px-4 border-b">{{ bilanRadio.radiologue_name }}</td>
+            <td class="py-2 px-4 border-b">{{ bilanRadio.type_radio }}</td>
+            <td class="py-2 px-4 border-b">
+              <img [src]="bilanRadio.image_link" alt="Image" class="w-20 h-20 object-cover">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Add Bilan Radiologique Modal -->
+<div *ngIf="isAddBilansRadioModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-lg w-full max-w-2xl mx-4 overflow-hidden" style="width: 600px; height: 500px;">
+    <!-- Modal Header -->
+    <div class="flex justify-between items-center bg-teal-500 text-white p-4">
+      <h2 class="text-lg font-bold">Add Bilan Radiologique</h2>
+      <button class="text-white hover:text-gray-200" (click)="closeAddBilansRadioModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="p-4 overflow-auto" style="max-height: calc(100% - 64px);">
+      <form (ngSubmit)="addBilanRadiologique()">
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">ID</label>
+          <input type="number" class="w-full p-2 border rounded" [(ngModel)]="newBilanRadiologique.id_examen" name="id_examen" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Date</label>
+          <input type="date" class="w-full p-2 border rounded" [(ngModel)]="newBilanRadiologique.date_examen" name="date_examen" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Radiologue Name</label>
+          <input type="text" class="w-full p-2 border rounded" [(ngModel)]="newBilanRadiologique.radiologue_name" name="radiologue_name" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Type</label>
+          <input type="text" class="w-full p-2 border rounded" [(ngModel)]="newBilanRadiologique.type_radio" name="type_radio" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Image Link</label>
+          <input type="text" class="w-full p-2 border rounded" [(ngModel)]="newBilanRadiologique.image_link" name="image_link" required>
+        </div>
+        <div class="flex justify-end">
+          <button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md mr-2" (click)="closeAddBilansRadioModal()">Cancel</button>
+          <button type="submit" class="px-4 py-2 bg-teal-500 text-white rounded-md">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<footer id="contact" class="bg-blue-600 text-white p-4">
+  <div class="container mx-auto text-center">
+    <p>© 2023 ATORA. Tous droits réservés.</p>
+    <p class="mt-2">Contactez-nous : support&#64;atora.com</p>
+  </div>
+</footer>
+

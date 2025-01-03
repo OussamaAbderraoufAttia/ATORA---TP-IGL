@@ -21,12 +21,12 @@ class UtilisateurAdmin(admin.ModelAdmin):
 
 
 # Register Medecin model
-'''
+
 @admin.register(Medecin)
 class MedecinAdmin(admin.ModelAdmin):
-    list_display = ('utilisateur', 'numero_ordre', 'specialite')
-    search_fields = ('numero_ordre', 'specialite')
-'''
+    list_display = ('utilisateur','specialite')
+    search_fields = ('specialite',)
+
 # Register Infirmier model
 @admin.register(Infirmier)
 class InfirmierAdmin(admin.ModelAdmin):

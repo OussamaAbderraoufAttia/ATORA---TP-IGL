@@ -1,0 +1,62 @@
+<div class=" m-32 p-4  shadow-xl  rounded-lg border-2">
+    <h1 class="text-2xl font-bold mb-4">Votre Profile</h1>
+    <form class="space-y-4  " (ngSubmit)="handleSubmit($event)">
+      <div class="flex items-center space-x-4">
+        <img
+          [src]="admin.profilePicture"
+          alt="Admin profile picture placeholder"
+          class="w-24 h-24 rounded-full"
+        />
+        <div>
+          <label class="block text-sm font-medium text-gray-700" for="profilePicture">
+            Change Profile Picture
+          </label>
+          <input
+            type="file"
+            id="profilePicture"
+            accept="image/*"
+            (change)="handleFileChange($event)"
+            class="mt-1 block w-full text-sm text-gray-900 border  border-gray-300 rounded-md cursor-pointer bg-white p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 file:border-0 file:bg-transparent file:text-black file:text-sm file:font-medium"
+          />
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700" for="email">Email</label>
+        <input
+          type="text"
+          id="email"
+          name="email"
+          [value]="admin.email"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700" for="phone">Phone</label>
+        <input
+          type="text"
+          id="phone"
+          name="phone"
+          [value]="admin.phone"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700" for="joinedDate">Joined Date</label>
+        <input
+          type="text"
+          id="joinedDate"
+          name="joinedDate"
+          [value]="admin.joinedDate"
+          readonly
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white"
+        />
+      </div>
+      <button
+        type="submit"
+        class="max-w-32 bg-black text-white py-2 px-4 text-sm font-semibold rounded-lg shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+      >
+        Update Profile
+      </button>
+    </form>
+  </div>
+  

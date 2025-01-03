@@ -1,0 +1,87 @@
+<!-- landing-page.component.html -->
+<div class="font-roboto bg-gradient-to-b from-gray-100 to-gray-200">
+    <!-- Header -->
+    <header class="bg-blue-600 text-white p-4">
+      <div class="container mx-auto flex justify-between items-center">
+        <div class="rounded-full bg-blue-600 w-32 h-12 flex items-center justify-center font-bold">
+            <img src="https://i.ibb.co/t44RYBf/logo-Atora.png" alt="Logo">
+            <h1 class="text-2xl font-bold">ATORA</h1>
+        </div>
+        
+        <nav>
+          <ul class="flex space-x-4 items-center">
+            <li><a class="hover:underline" routerLink="'/#features'">Fonctionnalités</a></li>
+            <li><a class="hover:underline" routerLink="/#vision">Notre Vision</a></li>
+            <li><a class="hover:underline" routerLink="/#contact">Contact</a></li>
+            <li>
+              <button 
+                class="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition"
+                (click)="navigateToLogin()"
+              >
+                Se connecter
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+  
+    <!-- Hero Section -->
+    <main class="h-screen text-center ">
+      <div class="w-full h-full mx-auto flex-col justify-center py-28" style="
+      background-image: url('https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1267&amp;q=80');
+    ">
+    
+        
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">ATORA</h1>
+        <p class="text-xl text-black font-semibold mb-8">
+          La plateforme qui révolutionne la gestion médicale. Un espace numérique conçu pour connecter médecins, patients, 
+          et institutions comme jamais auparavant.
+        </p>
+        <a routerLink="/#features" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-500 transition">
+          Découvrez nos fonctionnalités
+        </a>
+      </div>
+    </main>
+  
+    <!-- Features Section -->
+    <section id="features" class="py-12 bg-white">
+      <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-gray-900 text-center mb-8">Fonctionnalités Principales</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="bg-gray-50 p-6 rounded-lg shadow-lg">
+            <h3 class="text-xl font-bold mb-2">Gestion des Dossiers</h3>
+            <p class="text-gray-600">Accédez à toutes les données des patients en quelques clics.</p>
+          </div>
+          <div class="bg-gray-50 p-6 rounded-lg shadow-lg">
+            <h3 class="text-xl font-bold mb-2">Notifications Automatisées</h3>
+            <p class="text-gray-600">Recevez des rappels pour vos rendez-vous et tâches importantes.</p>
+          </div>
+          <div class="bg-gray-50 p-6 rounded-lg shadow-lg">
+            <h3 class="text-xl font-bold mb-2">Analyses et Statistiques</h3>
+            <p class="text-gray-600">Obtenez des insights précieux grâce à nos outils d’analyse avancée.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Vision Section -->
+    <section id="vision" class="py-12 bg-gradient-to-b from-gray-100 to-gray-200">
+      <div class="max-w-5xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-gray-900 text-center mb-8">Notre Vision</h2>
+        <p class="text-xl text-gray-700 text-center">
+          Comme Facebook a transformé les réseaux sociaux, ATORA révolutionne la gestion médicale. Notre mission est de connecter les 
+          acteurs de la santé et de simplifier leur quotidien grâce à une interface intuitive et des outils innovants.
+        </p>
+      </div>
+    </section>
+  
+    <!-- Footer -->
+    <footer id="contact" class="bg-blue-600 text-white p-4">
+      <div class="container mx-auto text-center">
+        <p>© 2023 ATORA. Tous droits réservés.</p>
+        <p class="mt-2">Contactez-nous : support&#64;atora.com</p>
+      </div>
+    </footer>
+  </div>
+  

@@ -1,89 +1,177 @@
 <header class="bg-blue-600 text-white p-4">
-    <div class="container mx-auto flex justify-between items-center">
-      <h1 class="text-2xl font-bold">Laborantin Dashboard</h1>
-      <nav>
-        <ul class="flex space-x-4">
-            <button
-            class="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition"
-            (click)="navigateToProfile()"
-          >
-            Profile
-          </button>
-        </ul>
-      </nav>
-    </div>
-  </header>
-  
-  <main class="container mx-auto p-4">
-    <div class="w-full max-w-4xl mx-auto shadow-lg bg-white rounded-lg">
-      <div class="p-6">
-        <h2 class="text-3xl font-bold mb-6">Laborantin Dashboard</h2>
-        <div class="w-full">
-          <div class="bg-white p-6 rounded-lg shadow-lg">
-            <h3 class="text-xl font-bold mb-4">Tests</h3>
-            <table class="min-w-full bg-white">
-              <thead>
-                <tr>
-                  <th class="py-2 px-4 border-b">Patient Name</th>
-                  <th class="py-2 px-4 border-b">Test</th>
-                  <th class="py-2 px-4 border-b">Status</th>
-                  <th class="py-2 px-4 border-b">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let test of tests">
-                  <td class="py-2 px-4 border-b">{{ test.patientName }}</td>
-                  <td class="py-2 px-4 border-b">{{ test.test }}</td>
-                  <td class="py-2 px-4 border-b">{{ test.status }}</td>
-                  <td class="py-2 px-4 border-b">
-                    <button
-                      class="bg-blue-500 text-white px-4 py-2 rounded"
-                      (click)="openDialog(test)"
-                    >
-                      Update Status
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+  <div class="container mx-auto flex justify-between items-center">
+    <h1 class="text-2xl font-bold">Laborantin Dashboard</h1>
+    <nav>
+      <ul class="flex space-x-4">
+        <button
+          class="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition"
+          (click)="navigateToProfile()"
+        >
+          Profile
+        </button>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container mx-auto p-4">
+  <div class="w-full max-w-4xl mx-auto shadow-lg bg-white rounded-lg">
+    <div class="p-6">
+      <h2 class="text-3xl font-bold mb-6">Laborantin Dashboard</h2>
+      <div class="w-full">
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+          <h3 class="text-xl font-bold mb-4">Tests</h3>
+          <table class="min-w-full bg-white">
+            <thead>
+              <tr>
+                <th class="py-2 px-4 border-b">Date</th>
+                <th class="py-2 px-4 border-b">Bilans</th>
+                <th class="py-2 px-4 border-b">Status</th>
+                <th class="py-2 px-4 border-b">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let test of tests">
+                <td class="py-2 px-4 border-b">{{ test.date }}</td>
+                <td class="py-2 px-4 border-b">
+                  <ul>
+                    <li *ngFor="let bilan of test.bilans">{{ bilan.name }}</li>
+                  </ul>
+                </td>
+                <td class="py-2 px-4 border-b">{{ test.status }}</td>
+                <td class="py-2 px-4 border-b">
+                  <button
+                    class="bg-blue-500 text-white px-4 py-2 rounded"
+                    (click)="openDialog(test)"
+                  >
+                    {{ test.status === 'Completed' ? 'Show More' : 'Update Status' }}
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
-  </main>
-  
-  <footer class="bg-blue-600 text-white p-4 mt-8">
-    <div class="container mx-auto text-center">
-      <p>© 2023 Laborantin Dashboard. All rights reserved.</p>
-    </div>
-  </footer>
-  <div
-    *ngIf="showDialog"
-    class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center"
-  >
-    <div class="bg-white rounded-lg p-6 w-full max-w-md shadow-lg">
-      <h2 class="text-xl font-bold mb-4">
-        Update Status for {{ selectedPatient?.name }}
-      </h2>
+  </div>
+</main>
+
+<footer class="bg-blue-600 text-white p-4 mt-8">
+  <div class="container mx-auto text-center">
+    <p>© 2023 Laborantin Dashboard. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Dialog -->
+<div
+  *ngIf="showDialog"
+  class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center p-4"
+>
+  <div class="bg-white rounded-lg p-6 w-full max-w-screen-sm shadow-lg overflow-y-auto max-h-[90vh]">
+    <h2 class="text-xl font-bold mb-4">
+      {{ selectedTest?.status === 'Completed' ? 'Bilan Details' : 'Update Bilan' }}
+    </h2>
+
+    <!-- Bilan Table -->
+    <table class="min-w-full bg-white mb-4">
+      <thead>
+        <tr>
+          <th class="py-2 px-4 border-b">Bilan</th>
+          <th class="py-2 px-4 border-b">Value</th>
+          <th class="py-2 px-4 border-b">Unity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bilan of selectedTest?.bilans">
+          <td class="py-2 px-4 border-b">{{ bilan.name }}</td>
+          <td class="py-2 px-4 border-b">
+            <input
+              *ngIf="selectedTest?.status !== 'Completed'; else displayValue"
+              [(ngModel)]="bilan.value"
+              (ngModelChange)="onBilanValueChange()"
+              class="w-full p-2 border rounded"
+              placeholder="Enter value"
+            />
+            <ng-template #displayValue>{{ bilan.value }}</ng-template>
+          </td>
+          <td class="py-2 px-4 border-b">
+            <input
+              *ngIf="selectedTest?.status !== 'Completed'; else displayUnity"
+              [(ngModel)]="bilan.unity"
+              class="w-full p-2 border rounded"
+              placeholder="Enter unity"
+            />
+            <ng-template #displayUnity>{{ bilan.unity }}</ng-template>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Compte Rendu -->
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2">Compte Rendu:</label>
       <textarea
-        class="w-full p-2 border rounded mb-4"
+        [(ngModel)]="selectedTest!.compteRendu"
+        class="w-full p-2 border rounded"
         rows="4"
-        placeholder="Enter Bilan"
+        placeholder="Enter compte rendu"
+        [disabled]="selectedTest?.status === 'Completed'"
       ></textarea>
-      <div class="flex justify-end space-x-4">
-        <button
-          class="bg-gray-500 text-white px-4 py-2 rounded"
-          (click)="closeDialog()"
-        >
-          Cancel
-        </button>
-        <button
-          class="bg-blue-500 text-white px-4 py-2 rounded"
-          (click)="updateStatus()"
-        >
-          Update
-        </button>
-      </div>
+    </div>
+
+    <!-- Generate Graph Checkbox -->
+    <div *ngIf="selectedTest?.status !== 'Completed'" class="mb-4">
+      <label class="flex items-center">
+        <input
+          type="checkbox"
+          [(ngModel)]="generateGraph"
+          (ngModelChange)="onBilanValueChange()"
+          class="form-checkbox text-blue-600"
+        />
+        <span class="ml-2 text-gray-700">Generate Graph</span>
+      </label>
+    </div>
+
+<!-- Generate Graph Checkbox -->
+<div *ngIf="selectedTest?.status !== 'Completed'" class="mb-4">
+  <label class="flex items-center">
+    <input
+      type="checkbox"
+      [(ngModel)]="generateGraph"
+      (ngModelChange)="onBilanValueChange()"
+      class="form-checkbox text-blue-600"
+    />
+    <span class="ml-2 text-gray-700">Generate Graph</span>
+  </label>
+</div>
+
+<!-- Graph Display -->
+<div *ngIf="generateGraph || selectedTest?.status === 'Completed'" class="mt-4" style="height: 300px;">
+  <canvas id="bilanChart"></canvas>
+</div>
+
+    <!-- Buttons -->
+    <div class="flex justify-end space-x-4">
+      <button
+        class="bg-gray-500 text-white px-4 py-2 rounded"
+        (click)="closeDialog()"
+      >
+        Close
+      </button>
+      <button
+        *ngIf="selectedTest?.status !== 'Completed'"
+        class="bg-blue-500 text-white px-4 py-2 rounded"
+        (click)="updateStatus()"
+      >
+        Update
+      </button>
+      <button
+        *ngIf="selectedTest?.status === 'Completed'"
+        class="bg-blue-500 text-white px-4 py-2 rounded"
+        (click)="closeDialog()"
+      >
+        Modify
+      </button>
     </div>
   </div>
-  
+</div>

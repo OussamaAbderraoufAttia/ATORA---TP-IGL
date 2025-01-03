@@ -1,9 +1,25 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<header class="bg-blue-600 text-white p-4">
+  <div class="container mx-auto flex justify-between items-center">
+    <div class="rounded-full bg-blue-600 mx-5 w-32 h-12 flex items-center justify-center font-bold">
+      <img class="" src="https://i.ibb.co/t44RYBf/logo-Atora.png" alt="Logo">
+      <h1 class="text-2xl font-bold">ATORA</h1>
+  </div>
+    
+    <nav>
+      <ul class="flex space-x-4">
+          <button
+          class="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition"
+          (click)="navigateToProfile()"
+        >
+          Profile
+        </button>
+      </ul>
+    </nav>
+  </div>
+</header>
 
-<div class="mb-8 w-32 top-0 left-0 ml-2 mt-2">
-  <img src="https://i.ibb.co/t44RYBf/logo-Atora.png" alt="Logo">
-</div>
 
 <div class="container mx-auto max-w-lg mt-10 shadow-lg rounded-lg overflow-hidden">
   <!-- Header -->
@@ -521,10 +537,10 @@
 </div>
 
 <!-- Bilans Radiologiques Card -->
-<div class="container mx-auto max-w-lg mt-10 shadow-lg rounded-lg overflow-hidden">
+<div class="container my-4 mx-auto max-w-lg mt-10 shadow-lg rounded-lg overflow-hidden">
   <div class="bg-teal-500 text-white p-4 flex items-center justify-between">
     <h2 class="text-lg font-bold">Bilans Radiologiques</h2>
-    <div>
+    <div class="flex items-center">
       <button class="px-4 py-2 bg-teal-700 text-white rounded-md mr-2" (click)="openBilansRadioModal()">View Bilans Radio</button>
       <button class="px-4 py-2 bg-blue-500 text-white rounded-md" (click)="openAddBilansRadioModal()">Add Bilan Radio</button>
     </div>
@@ -612,4 +628,10 @@
     </div>
   </div>
 </div>
+<footer id="contact" class="bg-blue-600 text-white p-4">
+  <div class="container mx-auto text-center">
+    <p>© 2023 ATORA. Tous droits réservés.</p>
+    <p class="mt-2">Contactez-nous : support&#64;atora.com</p>
+  </div>
+</footer>
 

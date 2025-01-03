@@ -18,7 +18,8 @@ export const routes: Routes = [
     {path:'dashboard-medecin', component:DashboardComponent, canActivate: [authGuard]},
     {path:'nurse-dashboard', component:DashboardNurseComponent, canActivate: [authGuard]},
     {path:'radiologue-dashboard', component:RadiologueDashboardComponent, canActivate: [authGuard]},
-    {path:'laborantin-dashboard', component:DashboardLaborantinComponent, canActivate: [authGuard]}
+    {path:'laborantin-dashboard', component:DashboardLaborantinComponent, canActivate: [authGuard]},
+    {path:'**', redirectTo: 'landing'}
 
    
 ];

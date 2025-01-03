@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
   imports: [CommonModule]
 })
 export class RadiologueDashboardComponent {
+  constructor(private router: Router) { }
   exams = [
     { patientName: 'John Doe', exam: 'X-Ray', status: 'Scheduled' },
     { patientName: 'Jane Smith', exam: 'MRI', status: 'Completed' },
@@ -18,6 +19,7 @@ export class RadiologueDashboardComponent {
   selectedExam: any = null;
   compteRendu: string = '';
   selectedFile: File | null = null;
+  
 
   viewResults(patientName: string): void {
     console.log(`Viewing results for ${patientName}`);
@@ -34,7 +36,9 @@ export class RadiologueDashboardComponent {
     this.compteRendu = '';
     this.selectedFile = null;
   }
-
+  navigateToProfile() {
+    this.router.navigate(['/profile']);
+    }
   onFileSelect(event: Event) {
     const target = event.target as HTMLInputElement;
     if (target.files) {

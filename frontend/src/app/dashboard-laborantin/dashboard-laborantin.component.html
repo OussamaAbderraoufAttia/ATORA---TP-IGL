@@ -3,9 +3,12 @@
       <h1 class="text-2xl font-bold">Laborantin Dashboard</h1>
       <nav>
         <ul class="flex space-x-4">
-          <li><a class="hover:underline" routerLink="/">Home</a></li>
-          <li><a class="hover:underline" routerLink="/profile">Profile</a></li>
-          <li><a class="hover:underline" routerLink="/settings">Settings</a></li>
+            <button
+            class="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition"
+            (click)="navigateToProfile()"
+          >
+            Profile
+          </button>
         </ul>
       </nav>
     </div>
@@ -35,7 +38,7 @@
                   <td class="py-2 px-4 border-b">
                     <button
                       class="bg-blue-500 text-white px-4 py-2 rounded"
-                      (click)="updateStatus(test.patientName)"
+                      (click)="openDialog(test)"
                     >
                       Update Status
                     </button>
@@ -54,4 +57,33 @@
       <p>© 2023 Laborantin Dashboard. All rights reserved.</p>
     </div>
   </footer>
+  <div
+    *ngIf="showDialog"
+    class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center"
+  >
+    <div class="bg-white rounded-lg p-6 w-full max-w-md shadow-lg">
+      <h2 class="text-xl font-bold mb-4">
+        Update Status for {{ selectedPatient?.name }}
+      </h2>
+      <textarea
+        class="w-full p-2 border rounded mb-4"
+        rows="4"
+        placeholder="Enter Bilan"
+      ></textarea>
+      <div class="flex justify-end space-x-4">
+        <button
+          class="bg-gray-500 text-white px-4 py-2 rounded"
+          (click)="closeDialog()"
+        >
+          Cancel
+        </button>
+        <button
+          class="bg-blue-500 text-white px-4 py-2 rounded"
+          (click)="updateStatus()"
+        >
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
   

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
+import { Router } from '@angular/router';
 // Define the type for Antecedents
 interface Antecedents {
   allergies: string;
@@ -75,6 +76,7 @@ interface BilanRadiologique {
   styleUrls: ['./patient.component.css']
 })
 export class PatientComponent {
+  constructor(private router : Router) { }
   activeTab: string = 'personal';
   userRole: string = "admin"; // Default state
   isModalOpen: boolean = false;
@@ -244,7 +246,9 @@ export class PatientComponent {
       image_link: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRggxFCY0B7t6ygNNJqp90Zb_QdQpLO_stV2A&s'
     }
   ];
-
+  navigateToProfile() {
+    this.router.navigate(['/profile']);
+    }
   // Method to set the active tab
   setActiveTab(tab: string): void {
     this.activeTab = tab;

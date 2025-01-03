@@ -9,14 +9,34 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule]
 })
 export class DashboardLaborantinComponent {
+  constructor(private router: Router) { }
   tests = [
     { patientName: 'John Doe', test: 'Blood Test', status: 'Pending' },
     { patientName: 'Jane Smith', test: 'Urine Analysis', status: 'In Progress' },
     { patientName: 'Alice Johnson', test: 'Cholesterol Test', status: 'Completed' }
   ];
+  navigateToProfile() {
+    this.router.navigate(['/profile']);
+    }
+    showDialog = false;
+    selectedPatient: any = null;
+    bilan: string = '';
+  
+    openDialog(patient: any) {
+      this.selectedPatient = patient;
+      this.showDialog = true;
+    }
+  
+    closeDialog() {
+      this.showDialog = false;
+      this.selectedPatient = null;
+      this.bilan = '';
+    }
+  
+    updateStatus() {
+      console.log(`Bilan for ${this.selectedPatient.name}: ${this.bilan}`);
+      this.closeDialog();
+    }
 
-  updateStatus(patientName: string): void {
-    console.log(`Updating status for ${patientName}`);
-    // Implémenter la logique pour mettre à jour le statut
-  }
+ 
 }

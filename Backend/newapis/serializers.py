@@ -99,12 +99,17 @@ class DPIDetailSerializer(serializers.ModelSerializer):
         ]
 
 class DPIListSerializer(serializers.ModelSerializer):
-    id_dpi = serializers.IntegerField(source="id_dpi")
-    nom_complet_patient = serializers.CharField(source="patient.utilisateur.__str__")
+    id_dpi = serializers.IntegerField()
+    nom_complet_patient = serializers.CharField(source="patient.utilisateur.__str__")#nom complet du patient
+    nss = serializers.CharField(source="patient.NSS")#numero de securite sociale
+    date_created = serializers.DateTimeField(source="patient.utilisateur.date_creation")#date de creation du patient
+    
+    
 
     class Meta:
         model = DPI
-        fields = ["nom_patient", "prenom_patient", "link"]
+        fields = ["id_dpi","nss","date_created", "nom_complet_patient","antecedents"]
+        read_only_fields = ["id_dpi","nss","date_created", "nom_complet_patient"]
 
 
 logger = logging.getLogger(__name__)

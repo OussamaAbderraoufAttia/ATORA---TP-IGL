@@ -10,7 +10,7 @@ export class DpiTableService {
   private dpiUrl: string;
 
   constructor(private http: HttpClient, @Inject('BACKEND_URL') private backendUrl: string) {
-    this.dpiUrl = `${this.backendUrl}/api/dpi/`;
+    this.dpiUrl = `${this.backendUrl}/newapi/dpis/`;
   }
 
   // Fetch all DPI records

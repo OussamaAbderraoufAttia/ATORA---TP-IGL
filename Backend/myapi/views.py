@@ -22,35 +22,13 @@ class LoginUserView(GenericAPIView):
     serializer_class = AuthenticationSerializer
 
     def post(self, request):
+        print(request.data)
         serializer = self.serializer_class(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         
         return Response(serializer.validated_data, status=status.HTTP_200_OK)
     
 
-
-class NewDpiView(CreateAPIView):
-    serializer_class = AccountRegistrationSerializer 
-
-    def perform_create(self, serializer):
-        user = serializer.save()
-        tokens = user.tokens()  # Ensure `tokens` is implemented in the User model
-
-        # Add additional fields to the response data
-        response_data = serializer.data
-        response_data.update({
-            'full_name': str(user),
-            'access_token': tokens.get('access', '')
-        })
-
-        return response_data
-
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        response_data = self.perform_create(serializer)
-        return Response(response_data, status=status.HTTP_201_CREATED)
 
 
 class ForgotPasswordView(View):

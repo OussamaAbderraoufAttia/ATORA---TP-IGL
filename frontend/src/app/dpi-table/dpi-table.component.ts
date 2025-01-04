@@ -51,8 +51,8 @@ export class DpiTableComponent implements OnInit {
     // Ensure searchText is valid
     const lowerCaseSearch = this.searchText?.toLowerCase() || '';
     // Safely filter the data
-    this.filteredData = this.dpis.filter((record: any) =>
-      record?.patient?.toLowerCase().includes(lowerCaseSearch)
+    this.filteredData = this.dpis.filter((record) =>
+      record.nss.toString().toLowerCase().includes(lowerCaseSearch)
     );
   }
 

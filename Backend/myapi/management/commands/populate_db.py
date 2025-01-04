@@ -14,7 +14,6 @@ class Command(BaseCommand):
         if not user:
             user = Utilisateur.objects.create_superuser(username='admin', password='test')
 
-        # create products - name, desc, price, stock, image
 
 
 

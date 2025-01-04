@@ -1,0 +1,11 @@
+<div  class="scanner-container">
+    <video [ngStyle]="{'display': isScanneron ? 'block' : 'none'}" id="video" class="w-full border"></video>
+    <div class="result mt-4">
+      <p *ngIf="result">Scanned Result: {{ result }}</p>
+      <p *ngIf="!result">Point your camera at a QR code.</p>
+    </div>
+    <button (click)="stopScanner()"  class="bg-red-500 text-white px-4 py-2 mt-4 rounded">
+      Stop Scanner
+      
+    </button>
+  </div>

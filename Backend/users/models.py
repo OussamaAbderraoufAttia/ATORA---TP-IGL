@@ -80,7 +80,7 @@ class Medecin(models.Model):
 
 class Infirmier(models.Model):
     utilisateur = models.OneToOneField(Utilisateur, on_delete=models.CASCADE, primary_key=True)
-    service = models.CharField(max_length=100)
+    service = models.CharField(max_length=100,default="general")
     hospital_name = models.ForeignKey('Hospital', on_delete=models.SET_NULL, null=True, blank=True, related_name='infirmiers')
 
 class Patient(models.Model):
@@ -101,8 +101,8 @@ class Radiologue(models.Model):
 
 class Laborantin(models.Model):
     id_utilisateur = models.OneToOneField(Utilisateur, on_delete=models.CASCADE, primary_key=True)
-    nom_etablissement = models.CharField(max_length=100)
-    specialisation = models.CharField(max_length=100)
+    nom_etablissement = models.CharField(max_length=100,default="general")
+    specialisation = models.CharField(max_length=100,default="general")
     
 class Hospital(models.Model):
     name = models.CharField(max_length=200)

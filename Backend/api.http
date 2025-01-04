@@ -1,7 +1,47 @@
-POST http://127.0.0.1:8000/myapi/token/refresh/   HTTP/1.1
+POST http://127.0.0.1:8000/myapi/token/refresh/ HTTP/1.1
 Content-Type: application/json
 
 {
-	"refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTczNjIwNzU4MCwiaWF0IjoxNzM1NjAyNzgwLCJqdGkiOiI5MmQ2YjgxZWEzODI0Mzk0YmZjMjViMDNlMWY5YTY5OCIsInVzZXJfaWQiOjZ9.noFJEHI5MOHsPyxJyt_DlaxxZACEvlM1Hu3ywBr7hSk"
+"refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTczNjUzMDAwNiwiaWF0IjoxNzM1OTI1MjA2LCJqdGkiOiI2MWY4MmJmYTVhNGE0Zjc5ODBjOTAxYWU1YjU0YzM1YSIsInVzZXJfaWQiOjF9.c_Uazruf6vjX-FUFOxHkm75OV2FklEFkRE8Uhjamsxc"
 }
 
+POST http://127.0.0.1:8000/newapi/consultations/add/   HTTP/1.1
+Content-Type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM1OTg3MTAyLCJpYXQiOjE3MzU5ODYyMDIsImp0aSI6Ijc5OTgxZGZmNWM0YTRkZmU5OTJlMzdlY2IyNWM1OWMzIiwidXNlcl9pZCI6Mn0.b9Q65FR-yktRQVucWXyVP8PSaJ8qfIjPgdgwV4xhZZ4
+
+{
+  "dpi": 1,
+  "resume": {
+    "symptomes": "Severe abdominal pain and nausea",
+    "diagnostic": "Gastritis",
+    "details": "Advised to avoid spicy food and take antacids."
+  },
+  "ordonnance": {
+    "prescription": [
+      {
+        "dose": "20mg",
+        "duree": "14 days",
+        "medicament": {
+          "nom": "Omeprazole",
+          "description": "Proton pump inhibitor",
+          "quantite": 28
+        }
+      },
+      {
+        "dose": "10mg",
+        "duree": "10 days",
+        "medicament": {
+          "nom": "Metoclopramide",
+          "description": "Antiemetic and gut motility stimulator",
+          "quantite": 20
+        }
+      }
+    ]
+  },
+  "bilan_biologique": {
+    "description": "Normal blood count"
+  },
+  "bilan_radiologue": {
+    "description": "No abnormalities detected"
+  }
+}

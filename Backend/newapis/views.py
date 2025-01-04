@@ -180,7 +180,7 @@ i will respond with this
 class ConsultationCreateView(generics.CreateAPIView):
     queryset = Consultation.objects.all()
     serializer_class = ConsultationSerializer
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
 
 class LaborantinBilanListView(generics.ListAPIView):
     serializer_class = BilanBiologiqueSerializer

@@ -24,14 +24,16 @@
           <table class="min-w-full bg-white">
             <thead>
               <tr>
-                <th class="py-2 px-4 border-b">Date</th>
-                <th class="py-2 px-4 border-b">Bilans</th>
-                <th class="py-2 px-4 border-b">Status</th>
-                <th class="py-2 px-4 border-b">Actions</th>
+                <th class="py-2 px-4 border-b text-left">Patient Name</th>
+                <th class="py-2 px-4 border-b text-left">Date</th>
+                <th class="py-2 px-4 border-b text-left">Bilans</th>
+                <th class="py-2 px-4 border-b text-left">Status</th>
+                <th class="py-2 px-4 border-b text-left">Actions</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let test of tests">
+                <td class="py-2 px-4 border-b">{{ test.patientName }}</td>
                 <td class="py-2 px-4 border-b">{{ test.date }}</td>
                 <td class="py-2 px-4 border-b">
                   <ul>
@@ -56,12 +58,6 @@
   </div>
 </main>
 
-<footer class="bg-blue-600 text-white p-4 mt-8">
-  <div class="container mx-auto text-center">
-    <p>© 2023 Laborantin Dashboard. All rights reserved.</p>
-  </div>
-</footer>
-
 <!-- Dialog -->
 <div
   *ngIf="showDialog"
@@ -71,6 +67,14 @@
     <h2 class="text-xl font-bold mb-4">
       {{ selectedTest?.status === 'Completed' ? 'Bilan Details' : 'Update Bilan' }}
     </h2>
+
+    <!-- Patient Info -->
+    <div class="mb-6 bg-gray-50 p-4 rounded">
+      <h3 class="font-semibold text-lg mb-2">Patient Information</h3>
+      <p class="mb-2"><span class="font-medium">Name:</span> {{ selectedTest?.patientName }}</p>
+      <p class="mb-2"><span class="font-medium">Description:</span> {{ selectedTest?.description }}</p>
+      <p><span class="font-medium">Date:</span> {{ selectedTest?.date }}</p>
+    </div>
 
     <!-- Bilan Table -->
     <table class="min-w-full bg-white mb-4">
@@ -119,27 +123,26 @@
       ></textarea>
     </div>
 
+    <!-- Generate Graph Checkbox -->
+    <div *ngIf="selectedTest?.status !== 'Completed'" class="mb-4">
+      <label class="flex items-center">
+        <input
+          type="checkbox"
+          [(ngModel)]="generateGraph"
+          (ngModelChange)="onBilanValueChange()"
+          class="form-checkbox text-blue-600"
+        />
+        <span class="ml-2 text-gray-700">Generate Graph</span>
+      </label>
+    </div>
 
-<!-- Generate Graph Checkbox -->
-<div *ngIf="selectedTest?.status !== 'Completed'" class="mb-4">
-  <label class="flex items-center">
-    <input
-      type="checkbox"
-      [(ngModel)]="generateGraph"
-      (ngModelChange)="onBilanValueChange()"
-      class="form-checkbox text-blue-600"
-    />
-    <span class="ml-2 text-gray-700">Generate Graph</span>
-  </label>
-</div>
-
-<!-- Graph Display -->
-<div *ngIf="generateGraph || selectedTest?.status === 'Completed'" class="mt-4" style="height: 300px;">
-  <canvas id="bilanChart"></canvas>
-</div>
+    <!-- Graph Display -->
+    <div *ngIf="generateGraph || selectedTest?.status === 'Completed'" class="mt-4" style="height: 300px;">
+      <canvas id="bilanChart"></canvas>
+    </div>
 
     <!-- Buttons -->
-    <div class="flex justify-end space-x-4">
+    <div class="flex justify-end space-x-4 mt-6">
       <button
         class="bg-gray-500 text-white px-4 py-2 rounded"
         (click)="closeDialog()"
@@ -153,13 +156,12 @@
       >
         Update
       </button>
-      <button
-        *ngIf="selectedTest?.status === 'Completed'"
-        class="bg-blue-500 text-white px-4 py-2 rounded"
-        (click)="closeDialog()"
-      >
-        Modify
-      </button>
     </div>
   </div>
 </div>
+
+<footer class="bg-blue-600 text-white p-4 mt-8">
+  <div class="container mx-auto text-center">
+    <p>© 2023 Laborantin Dashboard. All rights reserved.</p>
+  </div>
+</footer>

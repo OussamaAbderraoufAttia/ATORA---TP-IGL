@@ -12,6 +12,8 @@ interface Bilan {
 
 interface Test {
   id: number;
+  patientName: string;
+  description: string;
   date: string;
   bilans: Bilan[];
   status: 'Completed' | 'Pending';
@@ -36,10 +38,12 @@ export class DashboardLaborantinComponent {
   tests: Test[] = [
     {
       id: 1,
+      patientName: "John Doe",
+      description: "Routine blood test for diabetes monitoring",
       date: '2023-10-01',
       bilans: [
-        { name: 'b1', value: '120', unity: 'mg/dL' },
-        { name: 'b2', value: '5.5', unity: 'mmol/L' },
+        { name: 'Glucose', value: '120', unity: 'mg/dL' },
+        { name: 'HbA1c', value: '5.5', unity: 'mmol/L' },
       ],
       status: 'Completed',
       compteRendu: 'All results are within normal range.',
@@ -47,10 +51,12 @@ export class DashboardLaborantinComponent {
     },
     {
       id: 2,
+      patientName: "Jane Smith",
+      description: "Annual checkup blood work",
       date: '2023-10-02',
       bilans: [
-        { name: 'b1', value: null, unity: null },
-        { name: 'b2', value: null, unity: null },
+        { name: 'Cholesterol', value: null, unity: null },
+        { name: 'Triglycerides', value: null, unity: null },
       ],
       status: 'Pending',
       compteRendu: '',
@@ -96,18 +102,16 @@ export class DashboardLaborantinComponent {
     const canvas = document.getElementById('bilanChart') as HTMLCanvasElement;
     if (!canvas) return;
 
-    // If chart exists, destroy it first
     if (this.chart) {
       this.chart.destroy();
     }
 
-    // Create new chart
     this.chart = new Chart(canvas, {
       type: 'bar',
       data: {
         labels: validBilans.map(b => b.name),
         datasets: [{
-          label: 'Test Results',
+          label: `${this.selectedTest.patientName}'s Test Results`,
           data: validBilans.map(b => parseFloat(b.value || '0')),
           backgroundColor: validBilans.map((_, i) => 
             i % 2 === 0 ? '#36A2EB' : '#FF6384'

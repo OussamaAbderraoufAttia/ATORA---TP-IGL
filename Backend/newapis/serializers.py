@@ -1,10 +1,18 @@
-from medical_record.models import DPI, BilanBiologique, BilanRadiologique, Consultation, Medicament, Ordonnance, Prescription, Resume, Soin
+from medical_record.models import DPI, BilanBiologique, BilanRadiologique, Consultation, Medicament, Mesure, Ordonnance, Prescription, Resume, Soin
 from users.models import Utilisateur,Patient,Medecin
 from myapi.serializers import AccountRegistrationSerializer
 import logging
 from rest_framework import serializers
 from django.db import transaction
 from django.db.models import Q
+
+
+
+class SoinSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Soin
+        fields = ['id_soin', 'dpi', 'date_soin', 'infirmier',  'observation']
+        read_only_fields = ['id_soin', 'date_soin']
 
 
 
@@ -45,41 +53,9 @@ class BilanRadiologiqueSerializer(serializers.ModelSerializer):
         model = BilanRadiologique
         fields = ['description', 'type']
 
-class BilanBiologiqueSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = BilanBiologique
-        fields = ['description']
-
-class ConsultationSerializer(serializers.ModelSerializer):
-    resume = ResumeSerializer(required=False)
-    ordonnance = OrdonnanceSerializer(required=False)
-    bilan_biologique = BilanBiologiqueSerializer(required=False)
-    bilan_radiologue = BilanRadiologiqueSerializer(required=False)
-
-    class Meta:
-        model = Consultation
-        fields = ['resume', 'ordonnance', 'bilan_biologique', 'bilan_radiologue']
-
-class SoinSerializer(serializers.ModelSerializer):
-    infirmier = serializers.CharField(source="infirmier.utilisateur.__str__")
-
-    class Meta:
-        model = Soin
-        fields = ['infirmier', 'description', 'date_soin', 'observation']
 
 
-class DPIDetailSerializer(serializers.ModelSerializer):
-    consultations = ConsultationSerializer(many=True, read_only=True)
-    soins = SoinSerializer(many=True, read_only=True)
-    nom_complet_patient = serializers.CharField(source="patient.utilisateur.__str__")
-    nss = serializers.CharField(source="patient.NSS")
-    date_de_naissance = serializers.DateField(source="patient.date_naissance")
-    adresse = serializers.CharField(source="patient.adresse")
-    telephone = serializers.CharField(source="patient.personne_contact_telephone")
-    mutuelle = serializers.CharField(source="patient.mutuelle")
-    person_contact_telephone = serializers.CharField(source="patient.personne_contact_telephone")
-    personne_contact_nom=serializers.CharField(source="patient.personne_contact_nom")
-    nom_complet_medecin = serializers.CharField(source="medecin.utilisateur.__str__")
+
 
     class Meta:
         model = DPI
@@ -206,3 +182,79 @@ class QRCodeSerializer(serializers.ModelSerializer):
 
 
 
+##################################Consultation ++ Bilans############################################
+
+
+class MesureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Mesure
+        fields = ['id_mesure', 'param', 'valeur']
+
+
+class BilanBiologiqueSerializer(serializers.ModelSerializer):
+    mesures = MesureSerializer(many=True, required=False)
+
+    class Meta:
+        model = BilanBiologique
+        fields = ['id_bilanbiologique', 'consultation', 'description', 'date', 'status', 'mesures']
+        read_only_fields = ['id_bilanbiologique', 'consultation', 'date', 'status']
+
+    def create(self, validated_data):
+        mesures_data = validated_data.pop('mesures', [])
+        bilan = BilanBiologique.objects.create(**validated_data)
+        for mesure_data in mesures_data:
+            Mesure.objects.create(bilan_biologique=bilan, **mesure_data)
+        return bilan
+    
+
+class ConsultationSerializer(serializers.ModelSerializer):
+    id_consultation = serializers.IntegerField(read_only=True)
+    resume = ResumeSerializer(required=False)
+    ordonnance = OrdonnanceSerializer(required=False)
+    bilan_biologique = BilanBiologiqueSerializer(required=False)
+    bilan_radiologue = BilanRadiologiqueSerializer(required=False)
+
+    class Meta:
+        model = Consultation
+        fields = ['id_consultation', 'dpi', 'date', 'resume', 'ordonnance', 'bilan_radiologue', 'bilan_biologique']
+        read_only_fields = ['id_consultation', 'date']
+
+
+    def create(self, validated_data):
+        # Extract nested data
+        bilan_biologique_data = validated_data.pop('bilan_biologique', None)
+        resume_data = validated_data.pop('resume', None)
+        ordonnance_data = validated_data.pop('ordonnance', None)
+        bilan_radiologue_data = validated_data.pop('bilan_radiologue', None)
+
+        # Create the Consultation object
+        consultation = Consultation.objects.create(**validated_data)
+
+        # Creating nested  objects if data is provided
+        if bilan_biologique_data:
+            BilanBiologique.objects.create(consultation=consultation, **bilan_biologique_data)
+        if resume_data:
+            Resume.objects.create(consultation=consultation, **resume_data)
+        if ordonnance_data:
+            Ordonnance.objects.create(consultation=consultation, **ordonnance_data)
+        if bilan_radiologue_data:
+            BilanRadiologique.objects.create(consultation=consultation, **bilan_radiologue_data)
+
+        return consultation
+    
+
+
+
+class DPIDetailSerializer(serializers.ModelSerializer):
+    consultations = ConsultationSerializer(many=True, read_only=True)
+    soins = SoinSerializer(many=True, read_only=True)
+    nom_complet_patient = serializers.CharField(source="patient.utilisateur.__str__")
+    nss = serializers.CharField(source="patient.NSS")
+    date_de_naissance = serializers.DateField(source="patient.date_naissance")
+    adresse = serializers.CharField(source="patient.adresse")
+    telephone = serializers.CharField(source="patient.personne_contact_telephone")
+    mutuelle = serializers.CharField(source="patient.mutuelle")
+    person_contact_telephone = serializers.CharField(source="patient.personne_contact_telephone")
+    personne_contact_nom=serializers.CharField(source="patient.personne_contact_nom")
+    nom_complet_medecin = serializers.CharField(source="medecin.utilisateur.__str__")
+    

@@ -12,7 +12,7 @@ interface Antecedents {
 
 // Define the type for Consultations
 interface Consultation {
-  dpi: number; // Patient ID
+  dpi: number;
   resume: {
     symptoms: string;
     diagnosis: string;
@@ -31,7 +31,7 @@ interface Consultation {
   };
   bilan_biologique: {
     description: string;
-    parameters: { [key: string]: string }; // Key-value pairs for parameters
+    parameters: string[]; // Use an array of strings
   };
   bilan_radiologue: {
     description: string;
@@ -82,7 +82,7 @@ export class PatientComponent {
 
   // New consultation form model
   newConsultation: Consultation = {
-    dpi: 2, // Example patient ID
+    dpi: 2,
     resume: {
       symptoms: '',
       diagnosis: '',
@@ -93,7 +93,7 @@ export class PatientComponent {
     },
     bilan_biologique: {
       description: '',
-      parameters: {} // "b1", "b2",..
+      parameters: [] // Initialize as an empty array
     },
     bilan_radiologue: {
       description: '',
@@ -140,17 +140,17 @@ export class PatientComponent {
   // Add a new parameter to the bilan biologique
   addBilanBiologiqueParameter(): void {
     if (this.newBilanBiologiqueParameter.key) {
-      // Set the parameter value to an empty string (or any default value)
-      this.newConsultation.bilan_biologique.parameters[this.newBilanBiologiqueParameter.key] = '';
+      // Add the key to the parameters array
+      this.newConsultation.bilan_biologique.parameters.push(this.newBilanBiologiqueParameter.key);
       this.newBilanBiologiqueParameter = { key: '', value: '' }; // Reset the form
     }
   }
 
   // Remove a parameter from the bilan biologique
   removeBilanBiologiqueParameter(key: string): void {
-    delete this.newConsultation.bilan_biologique.parameters[key];
+    // Remove the key from the parameters array
+    this.newConsultation.bilan_biologique.parameters = this.newConsultation.bilan_biologique.parameters.filter(param => param !== key);
   }
-
   // Add Bilan Biologique Section
   addBilanBiologiqueSection(): void {
     this.showBilanBiologiqueForm = true;
@@ -161,7 +161,7 @@ export class PatientComponent {
     this.showBilanBiologiqueForm = false;
     this.newConsultation.bilan_biologique = {
       description: '',
-      parameters: {}
+      parameters: [] // Reset to an empty array
     };
   }
 
@@ -200,7 +200,7 @@ export class PatientComponent {
       },
       bilan_biologique: {
         description: '',
-        parameters: {}
+        parameters: [] // Reset to an empty array
       },
       bilan_radiologue: {
         description: '',

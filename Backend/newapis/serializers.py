@@ -40,14 +40,14 @@ class PrescriptionSerializer(serializers.ModelSerializer):
 class ResumeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Resume
-        fields = ['diagnostic', 'symptomes', 'antecedents', 'autres_informations']
+        fields = ['diagnostic', 'symptomes', 'details']
 
 class OrdonnanceSerializer(serializers.ModelSerializer):
     prescription = PrescriptionSerializer(many=True, required=False)
 
     class Meta:
         model = Ordonnance
-        fields = ['date_prescription', 'etat_ordonnance', 'prescription']
+        fields = ['date_prescription', 'prescription']
 class BilanRadiologiqueSerializer(serializers.ModelSerializer):
     class Meta:
         model = BilanRadiologique
@@ -57,33 +57,19 @@ class BilanRadiologiqueSerializer(serializers.ModelSerializer):
 
 
 
-    class Meta:
-        model = DPI
-        fields = [
-            "nss",
-            "nom_complet_patient",
-            "date_de_naissance",
-            "adresse",
-            "telephone",
-            "mutuelle",
-            "personne_contact_nom",
-            'person_contact_telephone',
-            "nom_complet_medecin",
-            'consultations',
-            'soins',
-        ]
+   
 
 class DPIListSerializer(serializers.ModelSerializer):
     id_dpi = serializers.IntegerField()
     nom_complet_patient = serializers.CharField(source="patient.utilisateur.__str__")#nom complet du patient
     nss = serializers.CharField(source="patient.NSS")#numero de securite sociale
     date_created = serializers.DateTimeField(source="patient.utilisateur.date_creation")#date de creation du patient
-    
+    url = serializers.URLField(source="qr_code.url", read_only=True)
     
 
     class Meta:
         model = DPI
-        fields = ["id_dpi","nss","date_created", "nom_complet_patient","antecedents"]
+        fields = ["id_dpi","nss","date_created", "nom_complet_patient","antecedents","url"]
         read_only_fields = ["id_dpi","nss","date_created", "nom_complet_patient"]
 
 
@@ -258,3 +244,18 @@ class DPIDetailSerializer(serializers.ModelSerializer):
     personne_contact_nom=serializers.CharField(source="patient.personne_contact_nom")
     nom_complet_medecin = serializers.CharField(source="medecin.utilisateur.__str__")
     
+    class Meta:
+        model = DPI
+        fields = [
+            "nss",
+            "nom_complet_patient",
+            "date_de_naissance",
+            "adresse",
+            "telephone",
+            "mutuelle",
+            "personne_contact_nom",
+            'person_contact_telephone',
+            "nom_complet_medecin",
+            'consultations',
+            'soins',
+        ]

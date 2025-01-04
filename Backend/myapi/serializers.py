@@ -64,7 +64,7 @@ class AuthenticationSerializer(serializers.ModelSerializer):
             user.derniere_connexion = timezone.now()
             user.save(update_fields=['derniere_connexion'])
 
-            auth_tokens = user.tokens()
+            auth_tokens = user.tokens
             
             return {
                 'id': user.id,
@@ -114,6 +114,12 @@ class AccountRegistrationSerializer(serializers.ModelSerializer):
     )
     prenom = serializers.CharField()
     nom = serializers.CharField()
+    telephone = serializers.CharField(
+        max_length=10,
+        required=True,
+        validators=[MinLengthValidator(9)]
+    )
+    
 
     class Meta:
         model = Utilisateur
@@ -124,7 +130,8 @@ class AccountRegistrationSerializer(serializers.ModelSerializer):
             'auth_key',
             'auth_key_confirmation',
             'account_type',
-            'expertise'
+            'expertise',
+            'telephone'
         ]
 
     def validate_auth_key(self, value):

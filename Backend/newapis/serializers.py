@@ -74,12 +74,17 @@ class BilanRadiologiqueSerializer(serializers.ModelSerializer):
         ]
 
 class DPIListSerializer(serializers.ModelSerializer):
-    id_dpi = serializers.IntegerField(source="id_dpi")
-    nom_complet_patient = serializers.CharField(source="patient.utilisateur.__str__")
+    id_dpi = serializers.IntegerField()
+    nom_complet_patient = serializers.CharField(source="patient.utilisateur.__str__")#nom complet du patient
+    nss = serializers.CharField(source="patient.NSS")#numero de securite sociale
+    date_created = serializers.DateTimeField(source="patient.utilisateur.date_creation")#date de creation du patient
+    
+    
 
     class Meta:
         model = DPI
-        fields = ["nom_complet_patient", "link"]
+        fields = ["id_dpi","nss","date_created", "nom_complet_patient","antecedents"]
+        read_only_fields = ["id_dpi","nss","date_created", "nom_complet_patient"]
 
 
 logger = logging.getLogger(__name__)
@@ -91,7 +96,7 @@ class DpiCreateSerializer(serializers.Serializer):
     birth_date = serializers.DateField()
     location = serializers.CharField()
     contact_number = serializers.CharField(max_length=15)
-    insurance = serializers.CharField(max_length=100)
+    insurance = serializers.CharField(max_length=100, required=False)
     emergency_contact = serializers.CharField(max_length=100)
     doctor_full_name = serializers.CharField(max_length=200)
 
@@ -125,10 +130,10 @@ class DpiCreateSerializer(serializers.Serializer):
                 "email": email,
                 "prenom": validated_attrs["nom"],
                 "nom": validated_attrs["nom"],
-                "role": Utilisateur.PATIENT,
-                "password": f"{validated_attrs['nss']}#2024",
-                "password2": f"{validated_attrs['nss']}#2024",
-                "telephone":f"{validated_attrs.get("contact_number","")}"
+                "account_type": Utilisateur.PATIENT,
+                "telephone": validated_attrs["contact_number"],
+                "auth_key": f"{validated_attrs['nss']}A2024",
+                "auth_key_confirmation": f"{validated_attrs['nss']}A2024"
             }
             
             user_serializer = AccountRegistrationSerializer(data=user_data)

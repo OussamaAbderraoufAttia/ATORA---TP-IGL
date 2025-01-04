@@ -45,11 +45,13 @@ class AuthenticationSerializer(serializers.ModelSerializer):
     def validate(self, data):
         try:
             request = self.context.get('request')
+            print(data)
             user = authenticate(
                 request,
                 email=data.get('email'),
                 password=data.get('password')
             )
+           
 
             if not user:
                 raise serializers.ValidationError({
@@ -64,6 +66,7 @@ class AuthenticationSerializer(serializers.ModelSerializer):
             user.derniere_connexion = timezone.now()
             user.save(update_fields=['derniere_connexion'])
 
+            auth_tokens = user.tokens
             auth_tokens = user.tokens
             
             return {
@@ -128,6 +131,7 @@ class AccountRegistrationSerializer(serializers.ModelSerializer):
             'prenom',
             'nom',
             'auth_key',
+            'telephone',
             'auth_key_confirmation',
             'account_type',
             'expertise',

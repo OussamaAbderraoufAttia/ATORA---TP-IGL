@@ -59,11 +59,11 @@ class Consultation(models.Model):
     id_consultation = models.AutoField(primary_key=True)
     dpi = models.ForeignKey(DPI, related_name="consultations", on_delete=models.CASCADE)
     date = models.DateField(auto_now=True)
-    resume = models.OneToOneField(Resume, related_name="consultation", on_delete=models.CASCADE)
-    ordonnance = models.OneToOneField(Ordonnance, related_name="consultation", on_delete=models.CASCADE)
+    resume = models.OneToOneField(Resume, related_name="consultation", on_delete=models.CASCADE,null=True, blank=True)
+    ordonnance = models.OneToOneField(Ordonnance, related_name="consultation", on_delete=models.CASCADE,null=True, blank=True)
     
     def __str__(self):
-        return f"Consultation {self.id_consultation} pour DPI {self.dpi.patient.utilisateur.nom_complet}"
+        return f"Consultation {self.id_consultation} pour DPI {self.dpi.patient.utilisateur.nom} {self.dpi.patient.utilisateur.prenom}"
 
 class Prescription(models.Model):
     id_prescription = models.AutoField(primary_key=True)

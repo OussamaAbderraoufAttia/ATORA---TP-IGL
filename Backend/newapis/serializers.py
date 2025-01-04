@@ -27,7 +27,7 @@ class UserSerializer(serializers.ModelSerializer):
 class MedicamentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Medicament
-        fields = ['nom', 'description', 'prix', 'quantite']
+        fields = ['nom', 'description', 'quantite']
 
 
 
@@ -207,6 +207,57 @@ class ConsultationSerializer(serializers.ModelSerializer):
 
 
     def create(self, validated_data):
+        # Extract nested data
+        bilan_biologique_data = validated_data.pop('bilan_biologique', None)
+        resume_data = validated_data.pop('resume', None)
+        ordonnance_data = validated_data.pop('ordonnance', None)
+        bilan_radiologue_data = validated_data.pop('bilan_radiologue', None)
+
+        # Create the Consultation object
+        consultation = Consultation.objects.create(**validated_data)
+
+        # Create nested objects if data is provided
+        if bilan_biologique_data:
+            BilanBiologique.objects.create(consultation=consultation, **bilan_biologique_data)
+
+        if resume_data:
+            # Create the Resume object without specifying the consultation
+            resume = Resume.objects.create(**resume_data)
+
+            # Associate the Resume with the Consultation using the reverse relationship
+            consultation.resume = resume
+            consultation.save()
+
+        if ordonnance_data:
+            # Extract nested Prescription data from Ordonnance data
+            prescriptions_data = ordonnance_data.pop('prescription', [])
+
+            # Create the Ordonnance object
+            ordonnance = Ordonnance.objects.create(**ordonnance_data)
+
+            # Create Prescription objects and associate them with the Ordonnance
+            for prescription_data in prescriptions_data:
+                # Extract nested Medicament data from Prescription data
+                medicament_data = prescription_data.pop('medicament', None)
+
+                # Create the Medicament object
+                medicament = Medicament.objects.create(**medicament_data)
+
+                # Create the Prescription object and associate it with the Ordonnance and Medicament
+                Prescription.objects.create(
+                    ordonnance=ordonnance,
+                    medicament=medicament,
+                    **prescription_data
+                )
+
+            # Associate the Ordonnance with the Consultation using the reverse relationship
+            consultation.ordonnance = ordonnance
+            consultation.save()
+
+        if bilan_radiologue_data:
+            BilanRadiologique.objects.create(consultation=consultation, **bilan_radiologue_data)
+
+        return consultation
         # Extract nested data
         bilan_biologique_data = validated_data.pop('bilan_biologique', None)
         resume_data = validated_data.pop('resume', None)

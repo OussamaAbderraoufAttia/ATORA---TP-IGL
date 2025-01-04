@@ -1,9 +1,4 @@
-POST http://127.0.0.1:8000/myapi/token/refresh/ HTTP/1.1
-Content-Type: application/json
 
-{
-"refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTczNjUzMDAwNiwiaWF0IjoxNzM1OTI1MjA2LCJqdGkiOiI2MWY4MmJmYTVhNGE0Zjc5ODBjOTAxYWU1YjU0YzM1YSIsInVzZXJfaWQiOjF9.c_Uazruf6vjX-FUFOxHkm75OV2FklEFkRE8Uhjamsxc"
-}
 
 POST http://127.0.0.1:8000/newapi/consultations/add/   HTTP/1.1
 Content-Type: application/json

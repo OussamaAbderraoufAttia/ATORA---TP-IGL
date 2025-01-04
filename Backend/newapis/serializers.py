@@ -114,7 +114,7 @@ class DpiCreateSerializer(serializers.Serializer):
 
             user_data = {
                 "email": email,
-                "prenom": validated_attrs["nom"],
+                "prenom": validated_attrs["prenom"],
                 "nom": validated_attrs["nom"],
                 "account_type": Utilisateur.PATIENT,
                 "telephone": validated_attrs["contact_number"],

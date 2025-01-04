@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { Router } from '@angular/router';
 import { DashboardService } from '../dashboard.service';
+import { QrscannerComponent } from "../qrscanner/qrscanner.component";
 
 
 @Component({
   selector: 'app-dashboard',
-  imports: [  DpiTableComponent, CommonModule, FormsModule], // Add FormsModule to the imports arrayimport { Component } from '@angular/core';
+  imports: [DpiTableComponent, CommonModule, FormsModule, QrscannerComponent], // Add FormsModule to the imports arrayimport { Component } from '@angular/core';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })

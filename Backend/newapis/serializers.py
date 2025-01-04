@@ -85,8 +85,7 @@ class DPIDetailSerializer(serializers.ModelSerializer):
         model = DPI
         fields = [
             "nss",
-            "nom_patient",
-            "prenom_patient",
+            "nom_complet_patient",
             "date_de_naissance",
             "adresse",
             "telephone",

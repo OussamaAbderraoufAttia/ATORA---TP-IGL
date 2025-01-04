@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { DpiTableComponent } from '../dpi-table/dpi-table.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,6 +11,7 @@ import { FormsModule } from '@angular/forms'; // Import FormsModule
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
+  constructor(private router: Router) { }
 createDPI() {
   const patientId = (document.getElementById("patient_id") as HTMLInputElement)?.value;
   const dateCreated = (document.getElementById("dateCreated") as HTMLInputElement)?.value;
@@ -24,6 +26,9 @@ console.log(newDPI);
   openDialog() {
     this.isDialogOpen = true;
   }
+  getrole(): string {
+    return localStorage.getItem('role') || '';
+  }
 
   closeDialog() {
     this.isDialogOpen = false;
@@ -32,6 +37,9 @@ console.log(newDPI);
 
   openQRCodeScanner(): void {
     this.isQRCodeScannerVisible = true;
+  }
+  navigateToProfile() {
+    this.router.navigate(['/profile']);
   }
 
   closeQRCodeScanner(): void {

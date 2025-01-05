@@ -2,15 +2,18 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import axios from 'axios';
+import { AuthInterceptor } from './auth.interceptor';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DpiTableService {
   private dpiUrl: string;
+  private dpiUrl2: string;
 
   constructor(private http: HttpClient, @Inject('BACKEND_URL') private backendUrl: string) {
     this.dpiUrl = `${this.backendUrl}/newapi/dpis/`;
+    this.dpiUrl2 = `${this.backendUrl}/newapi/dpi/`;
   }
 
   // Fetch all DPI records
@@ -30,7 +33,12 @@ export class DpiTableService {
   // Fetch a single DPI record by ID
   async getDpiById(id: number): Promise<any> {
     try {
-      const response = await axios.get(`${this.dpiUrl}${id}/`, { withCredentials: true });
+      const response = await axios.get(`${this.dpiUrl2}${id}/`, {
+        withCredentials: true,
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+        }
+      });
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {

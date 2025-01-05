@@ -70,7 +70,15 @@ interface BilanRadiologique {
   styleUrls: ['./patient.component.css']
 })
 export class PatientComponent {
-  constructor(private router: Router) {}
+   dpi : any;
+    id : any;
+  constructor(private router: Router) {
+    const navigation = this.router.getCurrentNavigation();
+    this.dpi = navigation?.extras?.state?.['dpi'];
+    this.id = navigation?.extras?.state?.['id'];
+    console.log('DPI record:', this.dpi);
+  }
+  
 
   activeTab: string = 'personal'; // Default active tab
   isAddConsultationModalOpen: boolean = false; // Controls consultation modal visibility
@@ -82,7 +90,7 @@ export class PatientComponent {
 
   // New consultation form model
   newConsultation: Consultation = {
-    dpi: 2,
+    dpi: 0,
     resume: {
       symptoms: '',
       diagnosis: '',

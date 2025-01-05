@@ -1,9 +1,22 @@
+<header class="bg-blue-600 text-white p-4">
+  <div class="container mx-auto flex justify-between items-center">
+    <div class="rounded-full bg-blue-600 w-32 h-12 flex items-center justify-center font-bold">
+        <img src="https://i.ibb.co/t44RYBf/logo-Atora.png" alt="Logo">
+        <h1 class="text-2xl font-bold">ATORA</h1>
+    </div>
+    
+    <nav>
+      <ul class="flex space-x-4 items-center">
+      </ul>
+    </nav>
+  </div>
+</header>
 <div class=" m-32 p-4  shadow-xl  rounded-lg border-2">
     <h1 class="text-2xl font-bold mb-4">Votre Profile</h1>
     <form class="space-y-4  " (ngSubmit)="handleSubmit($event)">
       <div class="flex items-center space-x-4">
         <img
-          [src]="admin.profilePicture"
+          src="../../../public/images/ramy.jpg"
           alt="Admin profile picture placeholder"
           class="w-24 h-24 rounded-full"
         />
@@ -26,7 +39,7 @@
           type="text"
           id="email"
           name="email"
-          [value]="admin.email"
+          [value]=""
           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
         />
       </div>
@@ -36,7 +49,7 @@
           type="text"
           id="phone"
           name="phone"
-          [value]="admin.phone"
+          [value]=""
           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
         />
       </div>
@@ -46,14 +59,14 @@
           type="text"
           id="joinedDate"
           name="joinedDate"
-          [value]="admin.joinedDate"
+          [value]=""
           readonly
           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white"
         />
       </div>
       <button
         type="submit"
-        class="max-w-32 bg-black text-white py-2 px-4 text-sm font-semibold rounded-lg shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+        class="max-w-32 bg-blue-600 text-white py-2 px-4 text-sm font-semibold rounded-lg shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
       >
         Update Profile
       </button>

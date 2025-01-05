@@ -27,9 +27,18 @@ export class LoginComponent {
     console.log('Login successful', response);
     localStorage.setItem('isLoggedIn', 'true');
     if (localStorage.getItem('role') == 'admin') {
-      this.router.navigate(['/profile'], { state: { user: response.user_data } });
+      this.router.navigate(['/dashboard-medecin'], { state: { user: response.user_data } });
     } else if (localStorage.getItem('role') == 'patient') {
     this.router.navigate(['/patient'], { state: { user: response.user_data } });
+    }
+    else if (localStorage.getItem('role') == 'laborantin') {
+      this.router.navigate(['/dashboard-laborantin'], { state: { user: response.user_data } });
+    }
+    else if (localStorage.getItem('role') == 'medecin') {
+      this.router.navigate(['/dashboard-medecin'], { state: { user: response.user_data } });
+    }
+    else if (localStorage.getItem('role') == 'infirmier') {
+      this.router.navigate(['/nurse-dashboard'], { state: { user: response.user_data } });
     }
     
     

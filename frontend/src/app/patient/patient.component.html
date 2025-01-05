@@ -23,11 +23,11 @@
   <!-- Header -->
   <div class="bg-blue-500 text-white p-4 flex items-center">
     <div class="rounded-full bg-blue-700 w-12 h-12 flex items-center justify-center font-bold">
-      MD
+      {{dpi.nom_complet_patient.charAt(0).toUpperCase()}}
     </div>
     <div class="ml-4">
-      <h2 class="text-lg font-bold">Madelynn Doe</h2>
-      <p class="text-sm">Numéro Sécurité Sociale: 794-555-4265-XS215</p>
+      <h2 class="text-lg font-bold">{{dpi.nom_complet_patient}}</h2>
+      <p class="text-sm">Numéro Sécurité Sociale: {{dpi.nss}}</p>
     </div>
   </div>
 
@@ -53,14 +53,14 @@
         <img class="w-10 h-10 mr-4" src="https://i.ibb.co/GTrZnpK/date.png" alt="date">
         <div>
           <p class="text-sm mb-1 font-bold">Date de Naissance</p>
-          <p class="text-sm">15/05/1985</p>
+          <p class="text-sm">{{dpi.date_de_naissance}}</p>
         </div>
       </div>
       <div class="bg-slate-300 flex items-center rounded-md p-2 mb-4">
         <img class="w-10 h-10 mr-4" src="https://i.ibb.co/7vKtRMD/maison.png" alt="adresse">
         <div>
           <p class="text-sm mb-1 font-bold">Adresse</p>
-          <p class="text-sm">4703 Davis Trace</p>
+          <p class="text-sm">{{dpi.adresse}}</p>
         </div>
       </div>
       <div class="bg-slate-300 flex items-center rounded-md p-2 mb-4">

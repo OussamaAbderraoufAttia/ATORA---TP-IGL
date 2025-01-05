@@ -3,14 +3,21 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { DpiTableService } from '../dpi-table.service';
 import { Router } from '@angular/router';
+import { AuthInterceptor } from '../auth.interceptor';
+import {  HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-dpi-table',
   templateUrl: './dpi-table.component.html',
   styleUrls: ['./dpi-table.component.css'],
   imports: [CommonModule, FormsModule], // Proper syntax
+  providers: [
+    DpiTableService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ] // Proper syntax
 })
 export class DpiTableComponent implements OnInit {
+
   errorMessage: string = ''; // For error messages
   dpis: any[] = []; // Initialize as an array
   filteredData: any[] = []; // Initialize as an array
@@ -23,7 +30,17 @@ export class DpiTableComponent implements OnInit {
   ngOnInit(): void {
     this.fetchDpis();
   }
-
+  async getDPIById(id: any) {
+    try {
+      const dpi = await this.dpiTableService.getDpiById(id);
+      console.log('DPI record:', dpi);
+      this.router.navigate(['/patient'], { state: { dpi: dpi, id : id } });
+      // Handle the DPI record as needed
+    } catch (error) {
+      console.error('Error fetching DPI record:', error);
+      this.errorMessage = 'Failed to load DPI record';
+    }
+  }
   /**
    * Fetch all DPI records from the service.
    */

@@ -25,7 +25,7 @@
           <td [style.display]=" showtodoctor() ? 'block' : 'none'" class="px-6 py-4 whitespace-nowrap">
             <button
               class="bg-white text-gray-900 px-4 py-2 rounded border hover:bg-gray-100 transition"
-              (click)="handleRowAction(dpi.patient)"
+              (click)="getDPIById(dpi.id_dpi)"
             >
               View 
             </button>

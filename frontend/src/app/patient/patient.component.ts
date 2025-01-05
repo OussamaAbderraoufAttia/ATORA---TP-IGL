@@ -1,52 +1,321 @@
-<<<<<<< HEAD
-import { Component, Input } from '@angular/core';
-import { InfoItemComponent } from '../info-item/info-item.component'; // Adjust the path as necessary
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { PatientService } from '../patient.service';
 
-interface PatientInfo {
-  securityNumber: string;
-  lastName: string;
-  firstName: string;
-  dateOfBirth: string;
-  address: string;
-  phone: string;
-  insurance: string;
-  doctor: string;
-  emergencyContact: string;
-  emergencyPhone: string;
+// Define the type for Antecedents
+interface Antecedents {
+  allergies: string;
+  medical_history: string;
+  family_history: string;
+}
+
+// Define the type for Consultations
+interface Consultation {
+  dpi: number;
+  resume: {
+    symptoms: string;
+    diagnosis: string;
+    details: string;
+  };
+  ordonnance: {
+    prescription: {
+      dose: string;
+      duree: string;
+      medicament: {
+        nom: string;
+        description: string;
+        quantite: number;
+      };
+    }[];
+  };
+  bilan_biologique: {
+    description: string;
+    parameters: string[]; // Use an array of strings
+  };
+  bilan_radiologue: {
+    description: string;
+    type: string;
+  };
+}
+
+// Define the type for Ordonnances
+interface Ordonnance {
+  dose: string;
+  duree: string;
+  medicament: {
+    nom: string;
+    description: string;
+    quantite: number;
+  };
+}
+
+// Define the type for Bilans Biologiques
+interface BilanBiologique {
+  description: string;
+  parameters: { [key: string]: string }; // Key-value pairs for parameters
+}
+
+// Define the type for Bilans Radiologiques
+interface BilanRadiologique {
+  description: string;
+  type: string;
 }
 
 @Component({
   selector: 'app-patient',
   standalone: true,
-  imports: [InfoItemComponent], // Import InfoItemComponent here
+  imports: [CommonModule, FormsModule],
   templateUrl: './patient.component.html',
   styleUrls: ['./patient.component.css']
 })
 export class PatientComponent {
-  @Input() patient!: PatientInfo;
-  activeTab: string = 'personal';
-
-  setActiveTab(tab: string) {
-    this.activeTab = tab;
+   dpi : any;
+    id : any;
+  constructor(private router: Router, private patientService: PatientService) {
+    const navigation = this.router.getCurrentNavigation();
+    this.dpi = navigation?.extras?.state?.['dpi'];
+    this.id = navigation?.extras?.state?.['id'];
+    console.log('DPI record:', this.dpi);
+    console.log('ID:', this.id);
   }
-}
-=======
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+  
 
+  activeTab: string = 'personal'; // Default active tab
+  isAddConsultationModalOpen: boolean = false; // Controls consultation modal visibility
+  isOrdonnanceModalOpen: boolean = false; // Controls ordonnance modal visibility
+  isBilanBiologiqueModalOpen: boolean = false; // Controls bilan biologique modal visibility
+  isBilanRadiologiqueModalOpen: boolean = false; // Controls bilan radiologique modal visibility
+  showBilanBiologiqueForm: boolean = false; // Controls visibility of Bilan Biologique form
+  showBilanRadiologiqueForm: boolean = false; // Controls visibility of Bilan Radiologique form
 
-@Component({
-  selector: 'app-patient',
-  imports: [],
-  templateUrl: './patient.component.html',
-  styleUrl: './patient.component.css'
-})
-export class PatientComponent {
-  activeTab: string = 'personal'; // Default state
+  // New consultation form model
+  newConsultation: Consultation = {
+    dpi: 0,
+    resume: {
+      symptoms: '',
+      diagnosis: '',
+      details: ''
+    },
+    ordonnance: {
+      prescription: []
+    },
+    bilan_biologique: {
+      description: '',
+      parameters: [] // Initialize as an empty array
+    },
+    bilan_radiologue: {
+      description: '',
+      type: ''
+    }
+  };
 
+  // Temporary variables for adding ordonnances, bilans biologiques, and bilans radiologiques
+  newOrdonnance: Ordonnance = {
+    dose: '',
+    duree: '',
+    medicament: {
+      nom: '',
+      description: '',
+      quantite: 0
+    }
+  };
+
+  newBilanBiologiqueParameter: { key: string; value: string } = { key: '', value: '' };
+
+  newBilanRadiologique: BilanRadiologique = {
+    description: '',
+    type: ''
+  };
+
+  selectedMedication: Ordonnance | null = null; // Holds the selected medication for details
+
+  // Add a new consultation
+  async addConsultation(): Promise<void> {
+    this.newConsultation.dpi = this.id;
+    try {
+      console.log('Consultation to be sent to the backend:', this.newConsultation);
+      const response = await this.patientService.addConsultation(this.newConsultation);
+      console.log('Consultation added successfully', response);
+      // Handle success response
+    } catch (error) {
+      console.error('Error adding consultation', error);
+      // Handle error response
+    }
+    this.closeAddConsultationModal();
+  }
+
+  // Add a new ordonnance to the current consultation
+  addOrdonnance(): void {
+    this.newConsultation.ordonnance.prescription.push({ ...this.newOrdonnance });
+    this.closeOrdonnanceModal();
+    this.resetOrdonnanceForm();
+  }
+
+  // Add a new parameter to the bilan biologique
+  addBilanBiologiqueParameter(): void {
+    if (this.newBilanBiologiqueParameter.key) {
+      // Add the key to the parameters array
+      this.newConsultation.bilan_biologique.parameters.push(this.newBilanBiologiqueParameter.key);
+      this.newBilanBiologiqueParameter = { key: '', value: '' }; // Reset the form
+    }
+  }
+
+  // Remove a parameter from the bilan biologique
+  removeBilanBiologiqueParameter(key: string): void {
+    // Remove the key from the parameters array
+    this.newConsultation.bilan_biologique.parameters = this.newConsultation.bilan_biologique.parameters.filter(param => param !== key);
+  }
+  // Add Bilan Biologique Section
+  addBilanBiologiqueSection(): void {
+    this.showBilanBiologiqueForm = true;
+  }
+
+  // Remove Bilan Biologique Section
+  removeBilanBiologiqueSection(): void {
+    this.showBilanBiologiqueForm = false;
+    this.newConsultation.bilan_biologique = {
+      description: '',
+      parameters: [] // Reset to an empty array
+    };
+  }
+
+  // Add Bilan Radiologique Section
+  addBilanRadiologiqueSection(): void {
+    this.showBilanRadiologiqueForm = true;
+  }
+
+  // Remove Bilan Radiologique Section
+  removeBilanRadiologiqueSection(): void {
+    this.showBilanRadiologiqueForm = false;
+    this.newConsultation.bilan_radiologue = {
+      description: '',
+      type: ''
+    };
+  }
+
+  // Add a new bilan radiologique to the current consultation
+  addBilanRadiologique(): void {
+    this.newConsultation.bilan_radiologue = { ...this.newBilanRadiologique };
+    this.closeBilanRadiologiqueModal();
+    this.resetBilanRadiologiqueForm();
+  }
+
+  // Reset the consultation form
+  resetConsultationForm(): void {
+    this.newConsultation = {
+      dpi: 2,
+      resume: {
+        symptoms: '',
+        diagnosis: '',
+        details: ''
+      },
+      ordonnance: {
+        prescription: []
+      },
+      bilan_biologique: {
+        description: '',
+        parameters: [] // Reset to an empty array
+      },
+      bilan_radiologue: {
+        description: '',
+        type: ''
+      }
+    };
+  }
+
+  // Reset the ordonnance form
+  resetOrdonnanceForm(): void {
+    this.newOrdonnance = {
+      dose: '',
+      duree: '',
+      medicament: {
+        nom: '',
+        description: '',
+        quantite: 0
+      }
+    };
+  }
+
+  // Reset the bilan radiologique form
+  resetBilanRadiologiqueForm(): void {
+    this.newBilanRadiologique = {
+      description: '',
+      type: ''
+    };
+  }
+
+  // Open consultation modal
+  openAddConsultationModal(): void {
+    this.isAddConsultationModalOpen = true;
+  }
+
+  // Close consultation modal
+  closeAddConsultationModal(): void {
+    this.isAddConsultationModalOpen = false;
+    this.resetConsultationForm();
+  }
+
+  // Open ordonnance modal
+  openOrdonnanceModal(): void {
+    this.isOrdonnanceModalOpen = true;
+  }
+
+  // Close ordonnance modal
+  closeOrdonnanceModal(): void {
+    this.isOrdonnanceModalOpen = false;
+    this.resetOrdonnanceForm();
+  }
+
+  // Open bilan biologique modal
+  openBilanBiologiqueModal(): void {
+    this.isBilanBiologiqueModalOpen = true;
+  }
+
+  // Close bilan biologique modal
+  closeBilanBiologiqueModal(): void {
+    this.isBilanBiologiqueModalOpen = false;
+  }
+
+  // Open bilan radiologique modal
+  openBilanRadiologiqueModal(): void {
+    this.isBilanRadiologiqueModalOpen = true;
+  }
+
+  // Close bilan radiologique modal
+  closeBilanRadiologiqueModal(): void {
+    this.isBilanRadiologiqueModalOpen = false;
+    this.resetBilanRadiologiqueForm();
+  }
+
+  // Open medication details modal
+  openMedicationDetails(medication: Ordonnance): void {
+    this.selectedMedication = medication;
+  }
+
+  // Close medication details modal
+  closeMedicationDetails(): void {
+    this.selectedMedication = null;
+  }
+
+  // Remove a medication from the ordonnance
+  removeMedication(index: number): void {
+    this.newConsultation.ordonnance.prescription.splice(index, 1);
+  }
+
+  // Navigate to profile
+  navigateToProfile(): void {
+    this.router.navigate(['/profile']);
+  }
+
+  // Set active tab
   setActiveTab(tab: string): void {
     this.activeTab = tab;
   }
 
+  // Helper function to get keys from an object
+  getKeys(obj: any): string[] {
+    return Object.keys(obj);
+  }
 }
->>>>>>> 051e9f9962861fe12f69190558fbb6952edf26b6

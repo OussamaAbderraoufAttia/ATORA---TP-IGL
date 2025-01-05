@@ -1,31 +1,46 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginService } from '../login.service';
+import { delay } from 'rxjs';
+
+
+
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  imports: []
 })
 export class LoginComponent {
-  loginForm: FormGroup;
+  
 
-  constructor(private fb: FormBuilder, private router: Router) {
-    this.loginForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
-    });
+  constructor(private router: Router, private loginService: LoginService) {
+   
   }
 
-  onSubmit() {
-    if (this.loginForm.valid) {
-      const { username, password } = this.loginForm.value;
-      // Implement your authentication logic here
-      console.log('Username:', username);
-
-      console.log('Password:', password);
-      // Navigate to the dashboard on successful login
-      this.router.navigate(['/dashboard']);
+  async onSubmit() {
+   const email = (document.getElementById('username') as HTMLInputElement)?.value;
+    const password = (document.getElementById('password')as HTMLInputElement)?.value;
+    const response = await this.loginService.login(email,password);
+    console.log('Login successful', response);
+    localStorage.setItem('isLoggedIn', 'true');
+    if (localStorage.getItem('role') == 'admin') {
+      this.router.navigate(['/dashboard-medecin'], { state: { user: response.user_data } });
+    } else if (localStorage.getItem('role') == 'patient') {
+    this.router.navigate(['/patient'], { state: { user: response.user_data } });
     }
+    else if (localStorage.getItem('role') == 'laborantin') {
+      this.router.navigate(['/dashboard-laborantin'], { state: { user: response.user_data } });
+    }
+    else if (localStorage.getItem('role') == 'medecin') {
+      this.router.navigate(['/dashboard-medecin'], { state: { user: response.user_data } });
+    }
+    else if (localStorage.getItem('role') == 'infirmier') {
+      this.router.navigate(['/nurse-dashboard'], { state: { user: response.user_data } });
+    }
+    
+    
   }
 }

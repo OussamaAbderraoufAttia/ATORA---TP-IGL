@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { PatientService } from '../patient.service';
 
 // Define the type for Antecedents
 interface Antecedents {
@@ -72,11 +73,12 @@ interface BilanRadiologique {
 export class PatientComponent {
    dpi : any;
     id : any;
-  constructor(private router: Router) {
+  constructor(private router: Router, private patientService: PatientService) {
     const navigation = this.router.getCurrentNavigation();
     this.dpi = navigation?.extras?.state?.['dpi'];
     this.id = navigation?.extras?.state?.['id'];
     console.log('DPI record:', this.dpi);
+    console.log('ID:', this.id);
   }
   
 
@@ -130,11 +132,17 @@ export class PatientComponent {
   selectedMedication: Ordonnance | null = null; // Holds the selected medication for details
 
   // Add a new consultation
-  addConsultation(): void {
-    // Log the consultation object to the console
-    console.log('Consultation to be sent to the backend:', this.newConsultation);
-
-    // Reset the form and close the modal
+  async addConsultation(): Promise<void> {
+    this.newConsultation.dpi = this.id;
+    try {
+      console.log('Consultation to be sent to the backend:', this.newConsultation);
+      const response = await this.patientService.addConsultation(this.newConsultation);
+      console.log('Consultation added successfully', response);
+      // Handle success response
+    } catch (error) {
+      console.error('Error adding consultation', error);
+      // Handle error response
+    }
     this.closeAddConsultationModal();
   }
 

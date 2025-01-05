@@ -42,6 +42,7 @@ this.router.navigate(['/admin/profile']);
     if (index > -1) {
       this.tasks[index] = { ...this.selectedTask };
     }
+    console.log("here is patientName:", this.tasks)
     this.closeDialog();
   }
 }

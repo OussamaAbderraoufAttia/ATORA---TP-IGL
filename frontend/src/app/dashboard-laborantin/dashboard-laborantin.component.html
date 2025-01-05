@@ -20,33 +20,33 @@
       <h2 class="text-3xl font-bold mb-6">Laborantin Dashboard</h2>
       <div class="w-full">
         <div class="bg-white p-6 rounded-lg shadow-lg">
-          <h3 class="text-xl font-bold mb-4">Tests</h3>
+          <h3 class="text-xl font-bold mb-4">Bilans Biologiques</h3>
           <table class="min-w-full bg-white">
             <thead>
               <tr>
-                <th class="py-2 px-4 border-b text-left">Patient Name</th>
+                <th class="py-2 px-4 border-b text-left">Description</th>
                 <th class="py-2 px-4 border-b text-left">Date</th>
-                <th class="py-2 px-4 border-b text-left">Bilans</th>
+                <th class="py-2 px-4 border-b text-left">Parameters</th>
                 <th class="py-2 px-4 border-b text-left">Status</th>
                 <th class="py-2 px-4 border-b text-left">Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let test of tests">
-                <td class="py-2 px-4 border-b">{{ test.patientName }}</td>
-                <td class="py-2 px-4 border-b">{{ test.date }}</td>
+              <tr *ngFor="let bilan of bilans">
+                <td class="py-2 px-4 border-b">{{ bilan.description }}</td>
+                <td class="py-2 px-4 border-b">{{ bilan.date }}</td>
                 <td class="py-2 px-4 border-b">
                   <ul>
-                    <li *ngFor="let bilan of test.bilans">{{ bilan.name }}</li>
+                    <li *ngFor="let mesure of bilan.mesures">{{ mesure.param }}: {{ mesure.valeur }}</li>
                   </ul>
                 </td>
-                <td class="py-2 px-4 border-b">{{ test.status }}</td>
+                <td class="py-2 px-4 border-b">{{ bilan.status }}</td>
                 <td class="py-2 px-4 border-b">
                   <button
                     class="bg-blue-500 text-white px-4 py-2 rounded"
-                    (click)="openDialog(test)"
+                    (click)="openDialog(bilan)"
                   >
-                    {{ test.status === 'Completed' ? 'Show More' : 'Update Status' }}
+                    {{ bilan.status === 'done' ? 'Show More' : 'Update Status' }}
                   </button>
                 </td>
               </tr>
@@ -65,79 +65,70 @@
 >
   <div class="bg-white rounded-lg p-6 w-full max-w-screen-sm shadow-lg overflow-y-auto max-h-[90vh]">
     <h2 class="text-xl font-bold mb-4">
-      {{ selectedTest?.status === 'Completed' ? 'Bilan Details' : 'Update Bilan' }}
+      {{ selectedBilan?.status === 'done' ? 'Bilan Details' : 'Update Bilan' }}
     </h2>
 
-    <!-- Patient Info -->
+    <!-- Bilan Info -->
     <div class="mb-6 bg-gray-50 p-4 rounded">
-      <h3 class="font-semibold text-lg mb-2">Patient Information</h3>
-      <p class="mb-2"><span class="font-medium">Name:</span> {{ selectedTest?.patientName }}</p>
-      <p class="mb-2"><span class="font-medium">Description:</span> {{ selectedTest?.description }}</p>
-      <p><span class="font-medium">Date:</span> {{ selectedTest?.date }}</p>
+      <h3 class="font-semibold text-lg mb-2">Bilan Information</h3>
+      <p class="mb-2"><span class="font-medium">Description:</span> {{ selectedBilan?.description }}</p>
+      <p><span class="font-medium">Date:</span> {{ selectedBilan?.date }}</p>
     </div>
 
-    <!-- Bilan Table -->
+    <!-- Mesures Table -->
     <table class="min-w-full bg-white mb-4">
       <thead>
         <tr>
-          <th class="py-2 px-4 border-b">Bilan</th>
+          <th class="py-2 px-4 border-b">Parameter</th>
           <th class="py-2 px-4 border-b">Value</th>
-          <th class="py-2 px-4 border-b">Unity</th>
+          <th class="py-2 px-4 border-b">Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let bilan of selectedTest?.bilans">
-          <td class="py-2 px-4 border-b">{{ bilan.name }}</td>
+        <tr *ngFor="let mesure of selectedBilan?.mesures; let i = index">
           <td class="py-2 px-4 border-b">
             <input
-              *ngIf="selectedTest?.status !== 'Completed'; else displayValue"
-              [(ngModel)]="bilan.value"
-              (ngModelChange)="onBilanValueChange()"
+              *ngIf="selectedBilan?.status !== 'done'; else displayParam"
+              [(ngModel)]="mesure.param"
               class="w-full p-2 border rounded"
-              placeholder="Enter value"
+              placeholder="Enter parameter"
             />
-            <ng-template #displayValue>{{ bilan.value }}</ng-template>
+            <ng-template #displayParam>{{ mesure.param }}</ng-template>
           </td>
           <td class="py-2 px-4 border-b">
             <input
-              *ngIf="selectedTest?.status !== 'Completed'; else displayUnity"
-              [(ngModel)]="bilan.unity"
+              *ngIf="selectedBilan?.status !== 'done'; else displayValeur"
+              [(ngModel)]="mesure.valeur"
+              (ngModelChange)="onMesureValueChange()"
               class="w-full p-2 border rounded"
-              placeholder="Enter unity"
+              placeholder="Enter value"
             />
-            <ng-template #displayUnity>{{ bilan.unity }}</ng-template>
+            <ng-template #displayValeur>{{ mesure.valeur }}</ng-template>
+          </td>
+          <td class="py-2 px-4 border-b">
+            <button
+              *ngIf="selectedBilan?.status !== 'done'"
+              class="bg-red-500 text-white px-4 py-2 rounded"
+              (click)="removeMesure(i)"
+            >
+              Remove
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
 
-    <!-- Compte Rendu -->
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2">Compte Rendu:</label>
-      <textarea
-        [(ngModel)]="selectedTest!.compteRendu"
-        class="w-full p-2 border rounded"
-        rows="4"
-        placeholder="Enter compte rendu"
-        [disabled]="selectedTest?.status === 'Completed'"
-      ></textarea>
-    </div>
-
-    <!-- Generate Graph Checkbox -->
-    <div *ngIf="selectedTest?.status !== 'Completed'" class="mb-4">
-      <label class="flex items-center">
-        <input
-          type="checkbox"
-          [(ngModel)]="generateGraph"
-          (ngModelChange)="onBilanValueChange()"
-          class="form-checkbox text-blue-600"
-        />
-        <span class="ml-2 text-gray-700">Generate Graph</span>
-      </label>
-    </div>
+    <!-- Add Mesure Button -->
+    <button
+      *ngIf="selectedBilan?.status !== 'done'"
+      class="bg-blue-500 text-white px-4 py-2 rounded mb-4"
+      (click)="addMesure()"
+    >
+      Add Parameter
+    </button>
 
     <!-- Graph Display -->
-    <div *ngIf="generateGraph || selectedTest?.status === 'Completed'" class="mt-4" style="height: 300px;">
+    <div *ngIf="generateGraph || selectedBilan?.status === 'done'" class="mt-4" style="height: 300px;">
       <canvas id="bilanChart"></canvas>
     </div>
 
@@ -150,7 +141,7 @@
         Close
       </button>
       <button
-        *ngIf="selectedTest?.status !== 'Completed'"
+        *ngIf="selectedBilan?.status !== 'done'"
         class="bg-blue-500 text-white px-4 py-2 rounded"
         (click)="updateStatus()"
       >
